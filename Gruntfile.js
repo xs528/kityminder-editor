@@ -95,7 +95,43 @@ module.exports = function(grunt) {
 		                '.tmp/scripts/filter/*.js',
                         '.tmp/scripts/dialog/**/*.js',
 		                '.tmp/scripts/directive/**/*.js'
-	                ]
+                    ],
+                }
+            },
+            commonjs: {
+                files: {
+                    'dist/common.js': [
+		                'bower_components/jquery/dist/jquery.js',
+		                'bower_components/bootstrap/dist/js/bootstrap.js',
+		                'bower_components/angular/angular.js',
+		                'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+		                'bower_components/codemirror/lib/codemirror.js',
+		                'bower_components/codemirror/mode/xml/xml.js',
+		                'bower_components/codemirror/mode/javascript/javascript.js',
+		                'bower_components/codemirror/mode/css/css.js',
+		                'bower_components/codemirror/mode/htmlmixed/htmlmixed.js',
+		                'bower_components/codemirror/mode/markdown/markdown.js',
+		                'bower_components/codemirror/addon/mode/overlay.js',
+		                'bower_components/codemirror/mode/gfm/gfm.js',
+		                'bower_components/angular-ui-codemirror/ui-codemirror.js',
+		                'bower_components/marked/lib/marked.js',
+		                'bower_components/kity/dist/kity.min.js',
+		                'bower_components/hotbox/hotbox.js',
+		                'bower_components/json-diff/json-diff.js',
+		                'node_modules/kityminder-core/dist/kityminder.core.min.js',
+		                'bower_components/color-picker/dist/color-picker.min.js',
+                    ],
+                }
+            },
+            commoncss: {
+                files: {
+                    'dist/common.css': [
+		                'bower_components/bootstrap/dist/css/bootstrap.css',
+		                'bower_components/codemirror/lib/codemirror.css',
+		                'bower_components/hotbox/hotbox.css',
+		                'node_modules/kityminder-core/dist/kityminder.core.css',
+		                'bower_components/color-picker/dist/color-picker.min.css',
+                    ],
                 }
             }
         },
@@ -108,6 +144,10 @@ module.exports = function(grunt) {
                 files: [{
 	                src: 'dist/kityminder.editor.js',
 	                dest: 'dist/kityminder.editor.min.js'
+                },
+                {
+	                src: 'dist/common.js',
+	                dest: 'dist/common.min.js'
                 }]
             }
         },
@@ -129,7 +169,8 @@ module.exports = function(grunt) {
 	    cssmin: {
 	        dist: {
 	            files: {
-	                'dist/kityminder.editor.min.css': 'dist/kityminder.editor.css'
+	                'dist/kityminder.editor.min.css': 'dist/kityminder.editor.css',
+	                'dist/common.min.css': 'dist/common.css',
 	         }
 	       }
 	    },
@@ -193,10 +234,10 @@ module.exports = function(grunt) {
 
     // Build task(s).
 	grunt.registerTask('build', ['clean:last',
-		//'wiredep:dist',
+		// 'wiredep:dist',
         'ngtemplates', 'dependence', 'ngAnnotate', 'concat', 'uglify', 'less', 'cssmin', 'copy', 'clean:clstmp']);
 
 	grunt.registerTask('dev', ['clean:last',
-        //'wiredep:dev',
+        // 'wiredep:dev',
         'ngtemplates', 'dependence', 'ngAnnotate', 'concat', 'uglify', 'less', 'cssmin', 'copy', 'clean:clstmp', 'browserSync', 'watch']);
 };
