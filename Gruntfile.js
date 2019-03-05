@@ -210,7 +210,15 @@ module.exports = function(grunt) {
 				    dest: 'dist'
 
 			    }]
-		    }
+			},
+			public: {
+				files: [{
+					expand: true,
+					cwd: 'dist/',
+					src: '*',
+				    dest: '../public/editor'
+			    }]
+			}
 	    },
 
 
