@@ -209,16 +209,16 @@ module.exports = function(grunt) {
           },
         ],
       },
-      // public: {
-      //   files: [
-      //     {
-      //       expand: true,
-      //       cwd: 'dist/',
-      //       src: '*',
-      //       dest: '../public/editor',
-      //     },
-      //   ],
-      // },
+      public: {
+        files: [
+          {
+            expand: true,
+            cwd: 'dist/',
+            src: '*',
+            dest: '../public/static/editor',
+          },
+        ],
+      },
     },
 
     // ng-annotate tries to make the code safe for minification automatically
@@ -265,8 +265,8 @@ module.exports = function(grunt) {
     'less',
     // 'cssmin',
     'copy',
-    'clean:clstmp',
-    // 'browserSync',
+    // 'clean:clstmp',
+    'browserSync',
     'watch',
   ])
 }
