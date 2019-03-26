@@ -214,7 +214,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: '*',
+            src: '**/*',
             dest: '../public/static/editor',
           },
         ],
@@ -249,7 +249,7 @@ module.exports = function(grunt) {
     'concat',
     // 'uglify',
     'less',
-    // 'cssmin',
+    'cssmin',
     'copy',
     'clean:clstmp',
   ])

@@ -58,10 +58,11 @@ angular.module('kityminderEditor')
             }
             if (/^.*\.(jpg|JPG|jpeg|JPEG|gif|GIF|png|PNG)$/.test(fileInput.val())) {
                 var file = fileInput[0].files[0];
-                return server.uploadImage(file).then(function (json) {
-                    var resp = json.data;
-                    if (resp.errno === 0) {
-                        $scope.data.url = resp.data.url;
+                return server.uploadFile(file)
+                .then(function (url) {
+                    if (url) {
+                        $scope.data.url = url;
+                        $scope.$evalAsync();
                     }
                 });
             } else {

@@ -16,11 +16,15 @@ angular.module('kityminderEditor')
                 var url = config.get('imageUpload');
                 var fd = new FormData();
                 fd.append('upload_file', file);
-
+                
                 return $http.post(url, fd, {
                     transformRequest: angular.identity,
                     headers: {'Content-Type': undefined}
                 });
-            }
+            },
+            uploadFile(file) {
+                return window.utils.uploadFile(file)
+            },
+            
         }
     }]);
