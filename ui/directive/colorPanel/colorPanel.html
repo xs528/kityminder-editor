@@ -1,16 +1,42 @@
-<div class="bg-color-wrap">
-        <span class="quick-bg-color"
-              ng-click="minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)"
-              ng-disabled="minder.queryCommandState('background') === -1"></span>
-		<span color-picker
-              class="bg-color"
-              set-color="setDefaultBg()"
-              ng-disabled="minder.queryCommandState('background') === -1">
-            <span class="caret"></span>
-        </span>
-        <span class="bg-color-preview"
-              ng-style="{ 'background-color': bgColor }"
-              ng-click="minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)"
-              ng-disabled="minder.queryCommandState('background') === -1"></span>
-
+<div
+  class="bg-color-wrap"
+  ng-disabled="minder.queryCommandState('background') === -1"
+  title="{{ 'forecolor' | lang: 'ui' }}"
+>
+  <span
+    class="quick-bg-color"
+    ng-click="minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)"
+  >
+    <svg class="icon-bg" viewBox="0 0 1024 1024">
+      <defs><style type="text/css"></style></defs>
+      <path
+        d="M0 0m179.649123 0l664.701754 0q179.649123 0 179.649123 179.649123l0 664.701754q0 179.649123-179.649123 179.649123l-664.701754 0q-179.649123 0-179.649123-179.649123l0-664.701754q0-179.649123 179.649123-179.649123Z"
+        fill="#D7D7D7"
+        p-id="2740"
+      ></path>
+      <path
+        d="M561.702924 179.649123l318.577778 603.621052a63.476023 63.476023 0 0 1-19.761404 82.039767 52.098246 52.098246 0 0 1-74.853801-22.156726L466.488889 239.532164a63.476023 63.476023 0 0 1 19.761403-82.039766 52.098246 52.098246 0 0 1 75.452632 22.156725z"
+        fill="#666666"
+        p-id="2741"
+      ></path>
+      <path
+        d="M756.322807 660.509942m-47.906433 0l-382.652631 0q-47.906433 0-47.906433-47.906433l0-24.552047q0-47.906433 47.906433-47.906433l382.652631 0q47.906433 0 47.906433 47.906433l0 24.552047q0 47.906433-47.906433 47.906433Z"
+        fill="#666666"
+        p-id="2742"
+      ></path>
+      <path
+        d="M557.511111 239.532164L239.532164 847.345029a52.098246 52.098246 0 0 1-74.853801 22.156725 63.476023 63.476023 0 0 1-19.761404-82.039766L462.297076 179.649123A52.098246 52.098246 0 0 1 538.947368 158.690058 63.476023 63.476023 0 0 1 557.511111 239.532164z"
+        fill="#666666"
+        p-id="2743"
+      ></path>
+    </svg>
+    <span
+      class="bg-color-preview"
+      ng-style="{ 'background-color': bgColor }"
+      ng-click="minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)"
+    ></span>
+  </span>
+  <span color-picker class="bg-color" set-color="setDefaultBg()">
+    <i class="iconfont icon-xiala"></i>
+  </span>
 </div>

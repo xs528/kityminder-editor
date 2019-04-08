@@ -1,40 +1,40 @@
 .font-operator {
-    width: 170px;
     display: inline-block;
-    vertical-align: middle;
-    font-size: 12px;
     padding: 0 5px;
 
     .font-size-list {
         display: inline-block;
-        border: 1px solid #eee;
-        padding: 2px 4px;
     }
 
     .font-family-list {
         display: inline-block;
-        border: 1px solid #eee;
-        padding: 2px 4px;
     }
 
+    .iconfont {
+        font-size: 12px;
+    }
 }
 
-.current-font-item a {
-    text-decoration: none;
-    display: inline-block;
+.current-font-item {
+    padding: 2px 0;
+    cursor: default;
+
+    &:hover {
+        background-color: @button-hover;
+    }
+    span {
+        text-decoration: none;
+        display: inline-block;
+    }
 }
 
 .current-font-family {
     width: 75px;
-    height: 18px;
     overflow: hidden;
-    vertical-align: bottom;
 }
 .current-font-size {
     width: 32px;
-    height: 18px;
     overflow: hidden;
-    vertical-align: bottom;
 }
 
 .current-font-item[disabled] {
@@ -52,9 +52,8 @@
 
 .font-bold, .font-italics {
     display: inline-block;
-    background: url(images/icons.png) no-repeat;
-    cursor: pointer;
     margin: 0 3px;
+    cursor: pointer;
 
 
     &:hover {
@@ -65,82 +64,21 @@
         background-color: @tool-active;
     }
 
-    &[disabled] {
-        opacity: 0.5;
+    &&-selected {
+        background-color: @tool-selected;
     }
-}
-
-.font-bold {
-    background-position: 0 -240px;
-}
-
-.font-italics {
-    background-position: 0 -260px;
-}
-
-.font-bold-selected, .font-italics-selected {
-    background-color: @tool-selected;
 }
 
 .font-color-wrap {
     display: inline-block;
-    width: 30px;
-    height: 22px;
-    margin: 3px 3px 0 0;
-    border: 1px #efefef solid;
-    vertical-align: middle;
+    height: 24px;
+    line-height: 24px;
     font-size: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 
-    &[disabled] {
-        opacity: 0.5;
-    }
-
-    .quick-font-color {
-        display: inline-block;
-        width: 20px;
-        height: 16px;
-        font-size: 14px;
-        line-height: 16px;
-        vertical-align: top;
-        text-align: center;
-        cursor: default;
-        color: #000;
-
-        &:hover {
-            background-color: @tool-hover;
-        }
-
-        &:active {
-            background-color: @tool-active;
-        }
-
-        &[disabled] {
-            opacity: 0.5;
-        }
-    }
-
-    .font-color-preview {
-        display: inline-block;
-        width: 12px;
-        height: 2px;
-        margin: 0 4px 0;
-        background-color: #000;
-
-        &[disabled] {
-            opacity: 0.5;
-        }
-    }
-}
-
-.font-color {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-
     &:hover {
         background-color: @tool-hover;
     }
@@ -149,12 +87,29 @@
         background-color: @tool-active;
     }
 
-    &[disabled] {
-        opacity: 0.5;
+    .quick-font-color {
+        position: relative;
+        display: inline-block;
+        width: 24px;
+        cursor: default;
+        color: #000;
     }
 
-    .caret {
-        margin-left: -2px;
-        margin-top: 7px;
+    .font-color-preview {
+        position: absolute;
+        left: 5px;
+        bottom: 2px;
+        width: 14px;
+        height: 4px;
+        border: 1px solid @tool-hover;
+        background-color: #000;
+    }
+}
+
+.font-color {
+    display: inline-block;
+
+    &:hover {
+        background-color: @tool-active;
     }
 }

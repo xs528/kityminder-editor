@@ -1,18 +1,12 @@
 .btn-group-vertical {
-    vertical-align: top;
-    margin: 5px;
-
     &.note-btn-group {
-        border-right: 1px dashed #eee;
+        border-right: 1px dashed #ccc;
         padding-right: 5px;
     }
 
     .note-btn, .note-btn-caption {
-        width: 40px;
-        margin: 0;
-        padding: 0;
-        border: none!important;
-        border-radius: 0!important;
+        position: relative;
+        display: inline-block;
 
         &:hover {
             background-color: @tool-hover;
@@ -29,16 +23,10 @@
     }
 
     .note-btn {
-        height: 25px;
-        background: url(images/icons.png) no-repeat center -1150px;
+        width: 30px;
     }
 
     .note-btn-caption {
-        height: 20px;
-
-        .caption {
-            font-size: 12px;
-        }
     }
 }
 

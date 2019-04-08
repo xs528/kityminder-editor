@@ -1,4 +1,5 @@
 <ul class="km-progress tool-group" ng-disabled="commandDisabled">
+	<li class="km-progress-label">{{ 'progress' | lang: 'panels' }}</li>
 	<li class="km-progress-item tool-group-item"
 	    ng-repeat="p in progresses"
 	    ng-click="commandDisabled || minder.execCommand('progress', p)"

@@ -25,7 +25,6 @@ angular.module('kityminderEditor')
 					seajs.config({
 						base: './src'
 					});
-
 					define('demo', function(require) {
 						var Editor = require('editor');
 
@@ -40,31 +39,28 @@ angular.module('kityminderEditor')
 						});
 
 						window.minder = window.km = editor.minder;
-
 						scope.editor = editor;
 						scope.minder = minder;
-                        scope.config = config.get();
-
-                        //scope.minder.setDefaultOptions(scope.config);
+						scope.config = config.get();
+						//scope.minder.setDefaultOptions(scope.config);
 						scope.$apply();
 
 						onInit(editor, minder);
 					});
 
 					seajs.use('demo');
-
 				} else if (window.kityminder && window.kityminder.Editor) {
 					var editor = new kityminder.Editor($minderEditor);
 
 					window.editor = scope.editor = editor;
 					window.minder = scope.minder = editor.minder;
 
-                    scope.config = config.get();
+					scope.config = config.get();
 
-                    //scope.minder.setDefaultOptions(config.getConfig());
+					//scope.minder.setDefaultOptions(config.getConfig());
 
-                    onInit(editor, editor.minder);
-                }
+					onInit(editor, editor.minder);
+			}
 
 			}
 		}

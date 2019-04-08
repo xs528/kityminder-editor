@@ -1,62 +1,12 @@
 .bg-color-wrap {
     display: inline-block;
-    width: 30px;
-    height: 22px;
-    margin: 3px 3px 0 0;
-    border: 1px #efefef solid;
-    vertical-align: middle;
+    height: 24px;
+    line-height: 24px;
     font-size: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
-    &[disabled] {
-        opacity: 0.5;
-    }
-
-    .quick-bg-color {
-        display: inline-block;
-        width: 20px;
-        height: 16px;
-        font-size: 14px;
-        line-height: 16px;
-        vertical-align: top;
-        text-align: center;
-        cursor: default;
-        color: #000;
-        background: url(images/icons.png) no-repeat center -1260px;
-
-        &:hover {
-            background-color: @tool-hover;
-        }
-
-        &:active {
-            background-color: @tool-active;
-        }
-
-        &[disabled] {
-            opacity: 0.5;
-        }
-    }
-
-    .bg-color-preview {
-        display: inline-block;
-        width: 12px;
-        height: 2px;
-        margin: 0 4px 0;
-        background-color: #fff;
-
-        &[disabled] {
-            opacity: 0.5;
-        }
-    }
-}
-
-.bg-color {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
 
     &:hover {
         background-color: @tool-hover;
@@ -65,13 +15,42 @@
     &:active {
         background-color: @tool-active;
     }
+    .quick-bg-color {
+        position: relative;
+        display: inline-block;
+        width: 24px;
+        cursor: default;
+        color: #000;
 
-    &[disabled] {
-        opacity: 0.5;
+        &:hover {
+            background-color: @tool-hover;
+        }
+
+        &:active {
+            background-color: @tool-active;
+        }
     }
 
-    .caret {
-        margin-left: -2px;
-        margin-top: 7px;
+    .bg-color-preview {
+        position: absolute;
+        left: 5px;
+        bottom: 0px;
+        width: 14px;
+        height: 4px;
+        border: 1px solid @tool-hover;
+        background-color: #000;
+    }
+
+    .icon-bg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.bg-color {
+    display: inline-block;
+
+    &:hover {
+        background-color: @tool-active;
     }
 }

@@ -5,7 +5,7 @@
     <title>爱莫脑图</title>
 
 	<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
-
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1075959_ucggvqfeiwn.css" />
 	<!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
@@ -34,11 +34,26 @@
             font-weight: normal;
             padding: 0 20px;
         }
+
+        .edit-bar {
+            position: relative;
+            z-index: 100;
+            background-color: #fff;
+        }
+
+        div.minder-editor-container {
+            top: 80px;
+        }
     </style>
 </head>
-<body ng-app="kityminderDemo" ng-controller="MainController">
+<body ng-app="kityminderDemo">
     <h1 class="editor-title">爱莫脑图</h1>
-    <kityminder-editor on-init="initEditor(editor, minder)"></kityminder-editor>
+    <div id="edit-bar" class="edit-bar" ng-if="showEditBar" ng-controller="editBarController">
+        <div edit-bar minder="minder" editor="editor"></div>
+    </div>
+    <div class="kityminderDemo" ng-controller="MainController">
+        <kityminder-editor on-init="initEditor(editor, minder)"></kityminder-editor>
+    </div>
 </body>
 
 <!-- bower:js -->
@@ -103,16 +118,23 @@
 <script src="ui/directive/navigator/navigator.directive.js"></script>
 <script src="ui/directive/searchBox/searchBox.directive.js"></script>
 <script src="ui/directive/searchBtn/searchBtn.directive.js"></script>
+<script src="ui/directive/editBar/editBar.directive.js"></script>
 
 
 <script>
 	angular.module('kityminderDemo', ['kityminderEditor'])
-			.controller('MainController', function($scope) {
-				$scope.initEditor = function(editor, minder) {
-					window.editor = editor;
-					window.minder = minder;
-				};
-			});
+        .controller('MainController', function($scope, $rootScope) {
+            $scope.initEditor = function(editor, minder) {
+                window.editor = $scope.editor = editor;
+                window.minder = $scope.minder = minder;
+
+                $rootScope.showEditBar = true
+                // angular.bootstrap(document.getElementById('edit-bar'), ['kityminderDemo'])
+            };
+        }).controller('editBarController', function($scope) {
+            $scope.editor = window.editor;
+            $scope.minder = window.minder;
+        });
 
 </script>
 

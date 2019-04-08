@@ -1,11 +1,8 @@
 .btn-group-vertical {
 
     .image-btn, .image-btn-caption {
-        width: 40px;
-        margin: 0;
-        padding: 0;
-        border: none!important;
-        border-radius: 0!important;
+        position: relative;
+        display: inline-block;
 
         &:hover {
             background-color: @tool-hover;
@@ -22,16 +19,10 @@
     }
 
     .image-btn {
-        height: 25px;
-        background: url(images/icons.png) no-repeat center -125px;
+        width: 30px;
     }
 
     .image-btn-caption {
-        height: 20px;
-
-        .caption {
-            font-size: 12px;
-        }
     }
 }
 

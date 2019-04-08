@@ -1,19 +1,23 @@
 .nav-bar {
     position: absolute;
-    width: 35px;
-    height: 240px;
     padding: 5px 0;
-    left: 10px;
-    bottom: 10px;
-    background: #fc8383;
-    color: #fff;
+    left: 60px;
+    bottom: 40px;
+    color: #666;
     border-radius: 4px;
     z-index: 10;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-    transition: -webkit-transform .7s 0.1s ease;
-    transition: transform .7s 0.1s ease;
+    background-color: #eee;
+    
+    .iconfont {
+        font-size: 20px;
+
+        &:hover {
+            color: @primary;
+        }
+    }
 
     .nav-btn {
+        float: left;
         width: 35px;
         height: 24px;
         line-height: 24px;
@@ -25,10 +29,6 @@
             height: 20px;
             margin: 2px auto;
             display: block;
-        }
-
-        &.active {
-            background-color: #5A6378;
         }
     }
 
@@ -108,8 +108,8 @@
     width: 140px;
     height: 120px;
     position: absolute;
-    left: 45px;
-    bottom: 30px;
+    left: 60px;
+    bottom: 80px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     border-radius: 0 2px 2px 0;
     padding: 1px;

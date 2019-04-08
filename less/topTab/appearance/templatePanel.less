@@ -1,15 +1,15 @@
-.temp-panel {
+.template-panel {
     margin: 5px 5px 5px 10px;
     border-right: 1px dashed #eee;
     display: inline-block;
     vertical-align: middle;
 }
 
-.temp-list {
+.template-list {
     min-width: 124px;
 }
 
-.temp-item-wrap {
+.template-item-wrap {
     width: 50px;
     height: 40px;
     padding: 0 2px;
@@ -17,39 +17,27 @@
     display: inline-block;
 }
 
-.temp-item {
+.template-item {
     display: inline-block;
-    width: 50px;
-    height: 40px;
-    background-image: url(images/template.png);
-    background-repeat: no-repeat;
+    width: 70px;
+    height: 50px;
+    margin: 0 10px;
+    text-decoration: none;
+    vertical-align: top;
 
-    &.default {
-        background-position: 0 0;
+    &:hover {
+        text-decoration: none;
+        .iconfont {
+            color: @primary;
+        }
     }
 
-    &.structure {
-        background-position: -50px 0;
-    }
-
-    &.filetree {
-        background-position: -100px 0;
-    }
-
-    &.right {
-        background-position: -150px 0;
-    }
-
-    &.fish-bone {
-        background-position: -200px 0;
-    }
-
-    &.tianpan {
-        background-position: -250px 0;
+    .iconfont {
+        font-size: 28px;
     }
 }
 
-.current-temp-item {
+.current-template-item {
     width: 74px;
     padding: 0 0 0 5px;
     border: 1px solid #fff;
@@ -66,6 +54,6 @@
         margin-left: 5px;
     }
 }
-.temp-item-selected {
+.template-item-selected {
     background-color: @tool-selected;
 }

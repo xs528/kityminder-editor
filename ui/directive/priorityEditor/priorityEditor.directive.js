@@ -15,10 +15,9 @@ angular.module('kityminderEditor')
                 for (var i = 0; i < 10; i++) {
                     priorities.push(i);
                 }
+	            $scope.priorities = priorities;
 
 	            commandBinder.bind(minder, 'priority', $scope);
-
-	            $scope.priorities = priorities;
 
 	            $scope.getPriorityTitle = function(p) {
 		            switch(p) {

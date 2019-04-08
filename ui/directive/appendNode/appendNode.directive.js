@@ -9,7 +9,6 @@ angular.module('kityminderEditor')
             replace: true,
             link: function($scope) {
                 var minder = $scope.minder;
-
                 commandBinder.bind(minder, 'appendchildnode', $scope)
 
                 $scope.execCommand = function(command) {

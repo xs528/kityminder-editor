@@ -5,22 +5,29 @@
     }
 }
 
-.tab-content .km-priority {
-    vertical-align: middle;
-    font-size: inherit;
+.km-priority {
     display: inline-block;
-    width: 140px;
-    margin: 5px;
-    border-right: 1px dashed #eee;
+    line-height: normal;
+    margin: 0;
+    padding: 0 10px;
+    border-right: 1px solid #ccc;
+    vertical-align: middle;
 
     .km-priority-item {
-        margin: 0 1px;
-        padding: 1px;
+        margin: 0 5px;
+        padding: 2px;
+        line-height: normal;
 
         .km-priority-icon {
             .priority-sprite(9);
             background: url(images/iconpriority.png) repeat-y;
             background-color: transparent;
         }
-  }
+    }
+    &-label {
+        display: inline-block;
+        margin: 0 20px;
+        color: #333;
+        font-weight: bold;
+    }
 }

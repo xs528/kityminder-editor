@@ -5,22 +5,28 @@
     }
 }
 
-.tab-content .km-progress {
-    vertical-align: middle;
-    font-size: inherit;
+.km-progress {
     display: inline-block;
-    width: 140px;
-    margin: 5px;
-    border-right: 1px dashed #eee;
+    line-height: normal;
+    margin: 0;
+    padding: 0 10px;
+    vertical-align: middle;
 
     .km-progress-item {
-        margin: 0 1px;
-        padding: 1px;
+        margin: 0 5px;
+        padding: 2px;
+        line-height: normal;
 
         .km-progress-icon {
             .progress-sprite(9);
             background: url(images/iconprogress.png) repeat-y;
             background-color: transparent;
         }
+    }
+    &-label {
+        display: inline-block;
+        margin: 0 20px;
+        color: #333;
+        font-weight: bold;
     }
 }

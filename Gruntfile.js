@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt)
   grunt.loadNpmTasks('grunt-browser-sync')
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-contrib-less')
 
   var pkg = grunt.file.readJSON('package.json')
 
@@ -54,21 +55,6 @@ module.exports = function(grunt) {
             dest: '.tmp/scripts/kityminder.editor.logic.js',
           },
         ],
-      },
-    },
-
-    // browser sync for dev
-    browserSync: {
-      bsFiles: {
-        dist: 'dist/css/*.css',
-        src: 'src/**',
-      },
-      options: {
-        server: {
-          baseDir: './',
-          index: 'index.html',
-          watchTask: true,
-        },
       },
     },
 
@@ -235,6 +221,26 @@ module.exports = function(grunt) {
             dest: '.tmp/scripts/',
           },
         ],
+      },
+    },
+
+    watch: {
+      less: {
+        files: ['less/**/*.less'],
+        tasks:['less'],
+      },
+    },
+    // browser sync for dev
+    browserSync: {
+      bsFiles: {
+        src: ['src/**', 'ui/**', 'dist/*.css'],
+      },
+      options: {
+        watchTask: true,
+        server: {
+          baseDir: './',
+          index: 'index.html',
+        },
       },
     },
   })

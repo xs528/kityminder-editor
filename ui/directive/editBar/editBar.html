@@ -1,0 +1,35 @@
+<div class="edit-bar">
+  <undo-redo editor="editor"></undo-redo>
+  <append-node minder="minder"></append-node>
+  <font-operator minder="minder" class="inline-directive"></font-operator>
+  <hyper-link minder="minder"></hyper-link>
+  <image-btn minder="minder"></image-btn>
+  <note-btn minder="minder"></note-btn>
+  <div
+    class="task-btn btn-group-vertical"
+    ng-class="{'active': currentVisible === visibleMap.task}"
+    title="{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}"
+    ng-click="toggleBottomBar(visibleMap.task)"
+    ng-disabled="commandDisabled"
+  >
+    <i class="iconfont icon-renwu"></i>
+  </div>
+  <div
+    class="template-btn btn-group-vertical"
+    ng-class="{'active': currentVisible === visibleMap.template}"
+    title="{{ 'layout' | lang: 'panels' }}"
+    ng-click="toggleBottomBar(visibleMap.template)"
+    ng-disabled="minder.queryCommandState('template') === -1"
+  >
+    <i class="iconfont icon-yangshi"></i>
+  </div>
+  <div class="bottom-bar" ng-if="currentVisible">
+    <div class="task-wrap" ng-if="currentVisible === visibleMap.task">
+      <priority-editor minder="minder"></priority-editor>
+      <progress-editor minder="minder"></progress-editor>
+    </div>
+    <div class="template-wrap" ng-if="currentVisible === visibleMap.template">
+      <template-list minder="minder" class="inline-directive"></template-list>
+    </div>
+  </div>
+</div>

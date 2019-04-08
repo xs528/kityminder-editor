@@ -1,3 +1,54 @@
+.edit-bar {
+    line-height: 24px;
+    text-align: center;
+    white-space: nowrap;
+    user-select: none;
+
+    .ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .btn-group-vertical {
+        margin: 3px;
+    }
+    [disabled] {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    .iconfont {
+        color: #666;
+
+        &.icon-xiala {
+            font-size: 12px;
+        }
+    }
+    * {
+        vertical-align: middle;
+    }
+    .task-btn, .template-btn {
+        width: 30px;
+        &:hover {
+            background-color: @tool-hover;
+        }
+        &:active,
+        &.active {
+            background-color: @tool-active;
+        }
+    }
+    .bottom-bar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 11;
+        height: 50px;
+        line-height: 50px;
+        white-space: nowrap;
+        background-color: #f3f3f3;
+    }
+}
+
 .km-editor {
     overflow: hidden;
     z-index: 2;
@@ -66,7 +117,7 @@ div.minder-editor-container {
 
 .minder-editor {
     position: absolute;
-    top: 92px;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -105,6 +156,9 @@ div.minder-editor-container {
 }
 
 @import (less) "_vars.less";
+@import (less) "_tool_group.less";
+@import (less) "_navigator.less";
+@import (less) "rewrite.less";
 @import (less) "imageDialog.less";
 @import (less) "topTab/topTab.less";
 @import (less) "topTab/idea/undoRedo.less";
@@ -128,8 +182,7 @@ div.minder-editor-container {
 @import (less) "topTab/view/select.less";
 @import (less) "topTab/view/search.less";
 @import (less) "topTab/searchBox.less";
-@import (less) "_tool_group.less";
-@import (less) "_navigator.less";
+
 
 
 
