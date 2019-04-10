@@ -9,7 +9,7 @@
       <span class="current-font-family ellipsis">{{
         getFontfamilyName(minder.queryCommandValue('fontfamily')) || '字体'
       }}</span
-      ><i class="iconfont icon-xialajiantou"></i>
+      ><i class="trangle"></i>
     </div>
     <ul class="dropdown-menu font-list">
       <li ng-repeat="f in fontFamilyList" class="font-item-wrap">
@@ -31,7 +31,7 @@
       title="{{ 'fontsize' | lang: 'ui' }}"
     >
       <span class="current-font-size">{{ minder.queryCommandValue('fontsize') || '字号' }}</span
-      ><i class="iconfont icon-xialajiantou"></i>
+      ><i class="trangle"></i>
     </div>
     <ul class="dropdown-menu font-list">
       <li ng-repeat="f in fontSizeList" class="font-item-wrap">
@@ -51,8 +51,8 @@
     ng-class="{'font-bold-selected' : minder.queryCommandState('bold') == 1}"
     ng-disabled="minder.queryCommandState('bold') === -1"
     title="{{ 'bold' | lang: 'ui' }}"
-  ></span>
-  <span
+  ></span
+  ><span
     class="s-btn-icon font-italics iconfont icon-xieti"
     ng-click="minder.queryCommandState('italic') === -1 || minder.execCommand('italic')"
     ng-class="{'font-italics-selected' : minder.queryCommandState('italic') == 1}"
@@ -76,8 +76,8 @@
         ng-click="minder.queryCommandState('forecolor') === -1 || minder.execCommand('forecolor', foreColor)"
       ></span>
     </span>
-    <span color-picker class="font-color" set-color="setDefaultColor()">
-      <i class="iconfont icon-xialajiantou"></i>
+    <span color-picker class="font-color" set-color="setDefaultColor">
+      <i class="trangle"></i>
     </span>
   </div>
   <color-panel minder="minder" class="inline-directive"></color-panel>

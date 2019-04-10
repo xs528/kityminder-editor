@@ -10,7 +10,7 @@
         white-space: nowrap;
     }
     .btn-group-vertical {
-        margin: 3px;
+        margin: 0 5px;
     }
     [disabled] {
         opacity: 0.5;
@@ -21,6 +21,17 @@
 
         &.icon-xialajiantou {
             font-size: 12px;
+        }
+    }
+    .trangle {
+        display: inline-flex;
+        justify-content: center;
+        width: 12px;
+        margin-top: 3px;
+        &::before {
+            content: '';
+            border: 3px solid transparent;
+            border-top-color: #888;
         }
     }
     * {

@@ -58,14 +58,15 @@ angular.module('kityminderEditor')
                 });
 
                 scope.setDefaultColor = function() {
-                    var currentNode = minder.getSelectedNode();
-                    var fontColor = minder.getNodeStyle(currentNode, 'color');
+                    // var currentNode = minder.getSelectedNode();
+                    // var fontColor = minder.getNodeStyle(currentNode, 'color');
 
-                    // 有可能是 kity 的颜色类
-                    return typeof fontColor === 'object' ? fontColor.toHEX() : fontColor;
+                    // // 有可能是 kity 的颜色类
+                    // return typeof fontColor === 'object' ? fontColor.toHEX() : fontColor;
+                    return '#333';
                 };
 
-                scope.foreColor = scope.setDefaultColor() || '#000';
+                scope.foreColor = scope.setDefaultColor();
 
                 scope.getFontfamilyName = function(val) {
                     var fontName = '';

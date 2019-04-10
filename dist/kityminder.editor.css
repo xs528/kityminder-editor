@@ -10,7 +10,7 @@
   white-space: nowrap;
 }
 .edit-bar .btn-group-vertical {
-  margin: 3px;
+  margin: 0 5px;
 }
 .edit-bar [disabled] {
   opacity: 0.5;
@@ -21,6 +21,17 @@
 }
 .edit-bar .iconfont.icon-xialajiantou {
   font-size: 12px;
+}
+.edit-bar .trangle {
+  display: inline-flex;
+  justify-content: center;
+  width: 12px;
+  margin-top: 3px;
+}
+.edit-bar .trangle::before {
+  content: '';
+  border: 3px solid transparent;
+  border-top-color: #888;
 }
 .edit-bar * {
   vertical-align: middle;
@@ -172,7 +183,6 @@ div.minder-editor-container {
   color: #666;
   border-radius: 4px;
   z-index: 10;
-  background-color: #eee;
 }
 .nav-bar .iconfont {
   font-size: 20px;
@@ -187,12 +197,8 @@ div.minder-editor-container {
   line-height: 24px;
   text-align: center;
 }
-.nav-bar .nav-btn .icon {
-  background: url(images/icons.png);
-  width: 20px;
-  height: 20px;
-  margin: 2px auto;
-  display: block;
+.nav-bar .nav-btn.active {
+  color: #3982FC;
 }
 .nav-bar .zoom-in .icon {
   background-position: 0 -730px;
@@ -208,12 +214,6 @@ div.minder-editor-container {
 }
 .nav-bar .camera .icon {
   background-position: 0 -870px;
-  width: 25px;
-  height: 25px;
-  margin: 0 auto;
-}
-.nav-bar .nav-trigger .icon {
-  background-position: 0 -845px;
   width: 25px;
   height: 25px;
   margin: 0 auto;
@@ -1189,7 +1189,6 @@ div a.theme-item {
   width: 24px;
   height: 24px;
   line-height: 24px;
-  margin-right: 3px;
   display: inline-block;
   vertical-align: middle;
 }
@@ -1236,11 +1235,10 @@ div a.theme-item {
 }
 .font-operator {
   display: inline-block;
-  padding: 0 5px;
 }
 .font-operator .font-size-list {
   display: inline-block;
-  margin-left: 8px;
+  margin-left: 10px;
 }
 .font-operator .font-family-list {
   display: inline-block;
@@ -1280,7 +1278,7 @@ div a.theme-item {
 .font-bold,
 .font-italics {
   display: inline-block;
-  margin: 0 3px;
+  margin-left: 10px;
   cursor: pointer;
 }
 .font-bold:hover,
@@ -1301,6 +1299,7 @@ div a.theme-item {
   display: inline-block;
   height: 24px;
   line-height: 24px;
+  margin-left: 10px;
   font-size: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1339,6 +1338,7 @@ div a.theme-item {
   display: inline-block;
   height: 24px;
   line-height: 24px;
+  margin-left: 10px;
   font-size: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
