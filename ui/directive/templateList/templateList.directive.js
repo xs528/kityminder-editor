@@ -6,8 +6,8 @@ angular.module('kityminderEditor')
 			scope: {
 				minder: '='
 			},
-            replace: true,
-			link: function($scope) {
+      replace: true,
+			link: function($scope, element) {
 				$scope.templateList = kityminder.Minder.getTemplateList();
 				$scope.templateIconList = {
 					default: 'icon-siweidaotu',
@@ -20,3 +20,4 @@ angular.module('kityminderEditor')
 			}
 		}
 	});
+	

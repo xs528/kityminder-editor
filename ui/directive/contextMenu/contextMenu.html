@@ -1,0 +1,14 @@
+<div class="km-context-menu">
+  <div class="km-menu-list" ng-if="visible" ng-style="position">
+    <div
+      class="km-menu-item"
+      ng-repeat="menu in menus"
+      ng-click="menuAction($event, menu.action)"
+      ng-class="{ 'cur-line': menu.cutLine }"
+      ng-disabled="menu.disabled()"
+    >
+      <span class="km-menu-item-label">{{ menu.label }}</span>
+      <span class="km-menu-item-key">{{ menu.shortcutkey }}</span>
+    </div>
+  </div>
+</div>

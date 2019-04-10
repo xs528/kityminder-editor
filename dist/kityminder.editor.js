@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2019-04-08
+ * kityminder-editor - v1.0.67 - 2019-04-10
  * https://github.com/fex-team/kityminder-editor
  * GitHub: https://github.com/fex-team/kityminder-editor 
  * Copyright (c) 2019 ; Licensed 
@@ -231,6 +231,29 @@ _p[5] = {
  */
 _p[6] = {
     value: function(require, exports, module) {
+        /**
+   * 文本复制
+   *
+   * @param {string} text - 要复制的文本
+   * @param {object} event - 用户触发的事件
+   */
+        var clipboard = function(text, event) {
+            var cb = new ClipboardJS("div.receiver", {
+                text: function() {
+                    return text;
+                }
+            });
+            cb.on("success", function(e) {
+                cb.off("error");
+                cb.off("success");
+            });
+            cb.on("error", function(e) {
+                cb.off("error");
+                cb.off("success");
+            });
+            cb.onClick(event);
+        };
+        var clipboardDataTemp = "";
         function ClipboardRuntime() {
             var minder = this.minder;
             var Data = window.kityminder.data;
@@ -243,8 +266,8 @@ _p[6] = {
             var kmencode = MimeType.getMimeTypeProtocol("application/km"), decode = Data.getRegisterProtocol("json").decode;
             var _selectedNodes = [];
             /*
-		 * 增加对多节点赋值粘贴的处理
-		 */
+     * 增加对多节点复制粘贴的处理
+     */
             function encode(nodes) {
                 var _nodes = [];
                 for (var i = 0, l = nodes.length; i < l; i++) {
@@ -292,7 +315,12 @@ _p[6] = {
                                     }
                                 }
                                 var str = encode(nodes);
-                                clipBoardEvent.clipboardData.setData("text/plain", str);
+                                if (clipBoardEvent.clipboardData) {
+                                    clipBoardEvent.clipboardData.setData("text/plain", str);
+                                } else {
+                                    clipboard(str, clipBoardEvent);
+                                    clipboardDataTemp = str;
+                                }
                             }
                             e.preventDefault();
                             break;
@@ -318,7 +346,12 @@ _p[6] = {
                         {
                             var nodes = minder.getSelectedNodes();
                             if (nodes.length) {
-                                clipBoardEvent.clipboardData.setData("text/plain", encode(nodes));
+                                if (clipBoardEvent.clipboardData) {
+                                    clipBoardEvent.clipboardData.setData("text/plain", encode(nodes));
+                                } else {
+                                    clipboard(encode(nodes), clipBoardEvent);
+                                    clipboardDataTemp = encode(nodes);
+                                }
                                 minder.execCommand("removenode");
                             }
                             e.preventDefault();
@@ -335,7 +368,7 @@ _p[6] = {
                     }
                     var clipBoardEvent = e;
                     var state = fsm.state();
-                    var textData = clipBoardEvent.clipboardData.getData("text/plain");
+                    var textData = clipBoardEvent.clipboardData ? clipBoardEvent.clipboardData.getData("text/plain") : clipboardDataTemp;
                     switch (state) {
                       case "input":
                         {
@@ -350,8 +383,8 @@ _p[6] = {
                       case "normal":
                         {
                             /*
-						 * 针对normal状态下通过对选中节点粘贴导入子节点文本进行单独处理
-						 */
+             * 针对normal状态下通过对选中节点粘贴导入子节点文本进行单独处理
+             */
                             var sNodes = minder.getSelectedNodes();
                             if (MimeType.whichMimeType(textData) === "application/km") {
                                 var nodes = decode(MimeType.getPureText(textData));
@@ -389,10 +422,15 @@ _p[6] = {
                 }
             };
             /**
-		 * 由editor的receiver统一处理全部事件，包括clipboard事件
-		 * @Editor: Naixor
-		 * @Date: 2015.9.24
-		 */
+     * 由editor的receiver统一处理全部事件，包括clipboard事件
+     * @Editor: Naixor
+     * @Date: 2015.9.24
+     */
+            this.clipboard = {
+                copy: beforeCopy,
+                cut: beforeCut,
+                paste: beforePaste
+            };
             document.addEventListener("copy", beforeCopy);
             document.addEventListener("cut", beforeCut);
             document.addEventListener("paste", beforePaste);
@@ -1266,7 +1304,6 @@ _p[13] = {
                     if (kity.Browser.safari) {
                         receiverElement.innerHTML = "";
                     }
-                    return fsm.jump("hotbox", "space-trigger");
                 }
                 /**
              * check
@@ -1372,7 +1409,6 @@ _p[13] = {
                 if (!minder.getSelectedNode()) {
                     return;
                 }
-                fsm.jump("hotbox", "content-menu");
             }, false);
             // 阻止热盒事件冒泡，在热盒正确执行前导致热盒关闭
             hotbox.$element.addEventListener("mousedown", function(e) {
@@ -2080,7 +2116,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
   'use strict';
 
   $templateCache.put('ui/directive/appendNode/appendNode.html',
-    "<div class=\"km-btn-group append-group\"><div class=\"km-btn-item append-child-node\" ng-disabled=\"minder.queryCommandState('AppendChildNode') === -1\" ng-click=\"minder.queryCommandState('AppendChildNode') === -1 || execCommand('AppendChildNode')\" title=\"{{ 'appendchildnode' | lang:'ui/command' }}\"><i class=\"iconfont icon-xiaji\"></i></div><div class=\"km-btn-item append-sibling-node\" ng-disabled=\"minder.queryCommandState('AppendSiblingNode') === -1\" ng-click=\"minder.queryCommandState('AppendSiblingNode') === -1 ||execCommand('AppendSiblingNode')\" title=\"{{ 'appendsiblingnode' | lang:'ui/command' }}\"><i class=\"iconfont icon-tongji\"></i></div><div class=\"km-btn-item append-parent-node\" ng-disabled=\"minder.queryCommandState('AppendParentNode') === -1\" ng-click=\"minder.queryCommandState('AppendParentNode') === -1 || execCommand('AppendParentNode')\" title=\"{{ 'appendparentnode' | lang:'ui/command' }}\"><i class=\"iconfont icon-shangji\"></i></div></div>"
+    "<div class=\"km-btn-group append-group\"><div class=\"km-btn-item append-child-node\" ng-disabled=\"minder.queryCommandState('AppendChildNode') === -1\" ng-click=\"minder.queryCommandState('AppendChildNode') === -1 || execCommand('AppendChildNode')\" title=\"{{ 'appendchildnode' | lang: 'ui/command' }}\"><i class=\"iconfont icon-xiaji\"></i></div><div class=\"km-btn-item append-sibling-node\" ng-disabled=\"minder.queryCommandState('AppendSiblingNode') === -1\" ng-click=\"minder.queryCommandState('AppendSiblingNode') === -1 ||execCommand('AppendSiblingNode')\" title=\"{{ 'appendsiblingnode' | lang: 'ui/command' }}\"><i class=\"iconfont icon-tongji\"></i></div><div class=\"km-btn-item append-parent-node\" ng-disabled=\"minder.queryCommandState('AppendParentNode') === -1\" ng-click=\"minder.queryCommandState('AppendParentNode') === -1 || execCommand('AppendParentNode')\" title=\"{{ 'appendparentnode' | lang: 'ui/command' }}\"><i class=\"iconfont icon-shangji\"></i></div></div>"
   );
 
 
@@ -2090,7 +2126,12 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/colorPanel/colorPanel.html',
-    "<div class=\"bg-color-wrap\" ng-disabled=\"minder.queryCommandState('background') === -1\"><span class=\"quick-bg-color\" ng-click=\"minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)\"><svg class=\"icon-bg\" viewbox=\"0 0 1024 1024\"><defs><style type=\"text/css\"></style></defs><path d=\"M0 0m179.649123 0l664.701754 0q179.649123 0 179.649123 179.649123l0 664.701754q0 179.649123-179.649123 179.649123l-664.701754 0q-179.649123 0-179.649123-179.649123l0-664.701754q0-179.649123 179.649123-179.649123Z\" fill=\"#D7D7D7\" p-id=\"2740\"></path><path d=\"M561.702924 179.649123l318.577778 603.621052a63.476023 63.476023 0 0 1-19.761404 82.039767 52.098246 52.098246 0 0 1-74.853801-22.156726L466.488889 239.532164a63.476023 63.476023 0 0 1 19.761403-82.039766 52.098246 52.098246 0 0 1 75.452632 22.156725z\" fill=\"#666666\" p-id=\"2741\"></path><path d=\"M756.322807 660.509942m-47.906433 0l-382.652631 0q-47.906433 0-47.906433-47.906433l0-24.552047q0-47.906433 47.906433-47.906433l382.652631 0q47.906433 0 47.906433 47.906433l0 24.552047q0 47.906433-47.906433 47.906433Z\" fill=\"#666666\" p-id=\"2742\"></path><path d=\"M557.511111 239.532164L239.532164 847.345029a52.098246 52.098246 0 0 1-74.853801 22.156725 63.476023 63.476023 0 0 1-19.761404-82.039766L462.297076 179.649123A52.098246 52.098246 0 0 1 538.947368 158.690058 63.476023 63.476023 0 0 1 557.511111 239.532164z\" fill=\"#666666\" p-id=\"2743\"></path></svg> <span class=\"bg-color-preview\" ng-style=\"{ 'background-color': bgColor }\" ng-click=\"minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)\"></span></span> <span color-picker class=\"bg-color\" set-color=\"setDefaultBg()\"><i class=\"iconfont icon-xiala\"></i></span></div>"
+    "<div class=\"bg-color-wrap\" ng-disabled=\"minder.queryCommandState('background') === -1\" title=\"{{ 'backgroundcolor' | lang: 'ui' }}\"><span class=\"quick-bg-color\" ng-click=\"minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)\"><svg class=\"icon-bg\" viewbox=\"0 0 1024 1024\"><defs><style type=\"text/css\"></style></defs><path d=\"M0 0m179.649123 0l664.701754 0q179.649123 0 179.649123 179.649123l0 664.701754q0 179.649123-179.649123 179.649123l-664.701754 0q-179.649123 0-179.649123-179.649123l0-664.701754q0-179.649123 179.649123-179.649123Z\" fill=\"#D7D7D7\" p-id=\"2740\"></path><path d=\"M561.702924 179.649123l318.577778 603.621052a63.476023 63.476023 0 0 1-19.761404 82.039767 52.098246 52.098246 0 0 1-74.853801-22.156726L466.488889 239.532164a63.476023 63.476023 0 0 1 19.761403-82.039766 52.098246 52.098246 0 0 1 75.452632 22.156725z\" fill=\"#666666\" p-id=\"2741\"></path><path d=\"M756.322807 660.509942m-47.906433 0l-382.652631 0q-47.906433 0-47.906433-47.906433l0-24.552047q0-47.906433 47.906433-47.906433l382.652631 0q47.906433 0 47.906433 47.906433l0 24.552047q0 47.906433-47.906433 47.906433Z\" fill=\"#666666\" p-id=\"2742\"></path><path d=\"M557.511111 239.532164L239.532164 847.345029a52.098246 52.098246 0 0 1-74.853801 22.156725 63.476023 63.476023 0 0 1-19.761404-82.039766L462.297076 179.649123A52.098246 52.098246 0 0 1 538.947368 158.690058 63.476023 63.476023 0 0 1 557.511111 239.532164z\" fill=\"#666666\" p-id=\"2743\"></path></svg> <span class=\"bg-color-preview\" ng-style=\"{ 'background-color': bgColor }\" ng-click=\"minder.queryCommandState('background') === -1 || minder.execCommand('background', bgColor)\"></span></span> <span color-picker class=\"bg-color\" set-color=\"setDefaultBg()\"><i class=\"iconfont icon-xialajiantou\"></i></span></div>"
+  );
+
+
+  $templateCache.put('ui/directive/contextMenu/contextMenu.html',
+    "<div class=\"km-context-menu\"><div class=\"km-menu-list\" ng-if=\"visible\" ng-style=\"position\"><div class=\"km-menu-item\" ng-repeat=\"menu in menus\" ng-click=\"menuAction($event, menu.action)\" ng-class=\"{ 'cur-line': menu.cutLine }\" ng-disabled=\"menu.disabled()\"><span class=\"km-menu-item-label\">{{ menu.label }}</span> <span class=\"km-menu-item-key\">{{ menu.shortcutkey }}</span></div></div></div>"
   );
 
 
@@ -2105,22 +2146,22 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/fontOperator/fontOperator.html',
-    "<div class=\"font-operator km-btn-group\"><div class=\"dropdown font-family-list\" dropdown><div class=\"dropdown-toggle current-font-item\" dropdown-toggle ng-disabled=\"minder.queryCommandState('fontfamily') === -1\"><span class=\"current-font-family ellipsis\" title=\"{{ 'fontfamily' | lang: 'ui' }}\">{{ getFontfamilyName(minder.queryCommandValue('fontfamily')) || '字体' }}</span><i class=\"iconfont icon-xiala\"></i></div><ul class=\"dropdown-menu font-list\"><li ng-repeat=\"f in fontFamilyList\" class=\"font-item-wrap\"><a ng-click=\"minder.execCommand('fontfamily', f.val)\" class=\"font-item\" ng-class=\"{ 'font-item-selected' : f == minder.queryCommandValue('fontfamily') }\" ng-style=\"{'font-family': f.val }\">{{ f.name }}</a></li></ul></div><div class=\"dropdown font-size-list\" dropdown><div class=\"dropdown-toggle current-font-item\" dropdown-toggle ng-disabled=\"minder.queryCommandState('fontsize') === -1\"><span class=\"current-font-size\" title=\"{{ 'fontsize' | lang: 'ui' }}\">{{ minder.queryCommandValue('fontsize') || '字号' }}</span><i class=\"iconfont icon-xiala\"></i></div><ul class=\"dropdown-menu font-list\"><li ng-repeat=\"f in fontSizeList\" class=\"font-item-wrap\"><a ng-click=\"minder.execCommand('fontsize', f)\" class=\"font-item\" ng-class=\"{ 'font-item-selected' : f == minder.queryCommandValue('fontsize') }\" ng-style=\"{'font-size': f + 'px'}\">{{ f }}</a></li></ul></div><span class=\"s-btn-icon font-bold iconfont icon-jiacu\" ng-click=\"minder.queryCommandState('bold') === -1 || minder.execCommand('bold')\" ng-class=\"{'font-bold-selected' : minder.queryCommandState('bold') == 1}\" ng-disabled=\"minder.queryCommandState('bold') === -1\" title=\"{{ 'bold' | lang:'ui' }}\"></span> <span class=\"s-btn-icon font-italics iconfont icon-xieti\" ng-click=\"minder.queryCommandState('italic') === -1 || minder.execCommand('italic')\" ng-class=\"{'font-italics-selected' : minder.queryCommandState('italic') == 1}\" ng-disabled=\"minder.queryCommandState('italic') === -1\" title=\"{{ 'italic' | lang:'ui' }}\"></span><div class=\"font-color-wrap\" ng-disabled=\"minder.queryCommandState('forecolor') === -1\"><span class=\"quick-font-color\" ng-click=\"minder.queryCommandState('forecolor') === -1 || minder.execCommand('forecolor', foreColor)\"><i class=\"iconfont icon-zitiyanse\"></i> <span class=\"font-color-preview\" ng-style=\"{ 'background-color': foreColor }\" ng-click=\"minder.queryCommandState('forecolor') === -1 || minder.execCommand('forecolor', foreColor)\"></span></span> <span color-picker class=\"font-color\" set-color=\"setDefaultColor()\"><i class=\"iconfont icon-xiala\"></i></span></div><color-panel minder=\"minder\" class=\"inline-directive\"></color-panel></div>"
+    "<div class=\"font-operator km-btn-group\"><div class=\"dropdown font-family-list\" dropdown><div class=\"dropdown-toggle current-font-item\" dropdown-toggle ng-disabled=\"minder.queryCommandState('fontfamily') === -1\" title=\"{{ 'fontfamily' | lang: 'ui' }}\"><span class=\"current-font-family ellipsis\">{{ getFontfamilyName(minder.queryCommandValue('fontfamily')) || '字体' }}</span><i class=\"iconfont icon-xialajiantou\"></i></div><ul class=\"dropdown-menu font-list\"><li ng-repeat=\"f in fontFamilyList\" class=\"font-item-wrap\"><a ng-click=\"minder.execCommand('fontfamily', f.val)\" class=\"font-item\" ng-class=\"{ 'font-item-selected' : f == minder.queryCommandValue('fontfamily') }\" ng-style=\"{'font-family': f.val }\">{{ f.name }}</a></li></ul></div><div class=\"dropdown font-size-list\" dropdown><div class=\"dropdown-toggle current-font-item\" dropdown-toggle ng-disabled=\"minder.queryCommandState('fontsize') === -1\" title=\"{{ 'fontsize' | lang: 'ui' }}\"><span class=\"current-font-size\">{{ minder.queryCommandValue('fontsize') || '字号' }}</span><i class=\"iconfont icon-xialajiantou\"></i></div><ul class=\"dropdown-menu font-list\"><li ng-repeat=\"f in fontSizeList\" class=\"font-item-wrap\"><a ng-click=\"minder.execCommand('fontsize', f)\" class=\"font-item\" ng-class=\"{ 'font-item-selected' : f == minder.queryCommandValue('fontsize') }\" ng-style=\"{'font-size': f + 'px'}\">{{ f }}</a></li></ul></div><span class=\"s-btn-icon font-bold iconfont icon-jiacu\" ng-click=\"minder.queryCommandState('bold') === -1 || minder.execCommand('bold')\" ng-class=\"{'font-bold-selected' : minder.queryCommandState('bold') == 1}\" ng-disabled=\"minder.queryCommandState('bold') === -1\" title=\"{{ 'bold' | lang: 'ui' }}\"></span> <span class=\"s-btn-icon font-italics iconfont icon-xieti\" ng-click=\"minder.queryCommandState('italic') === -1 || minder.execCommand('italic')\" ng-class=\"{'font-italics-selected' : minder.queryCommandState('italic') == 1}\" ng-disabled=\"minder.queryCommandState('italic') === -1\" title=\"{{ 'italic' | lang: 'ui' }}\"></span><div class=\"font-color-wrap\" ng-disabled=\"minder.queryCommandState('forecolor') === -1\" title=\"{{ 'forecolor' | lang: 'ui' }}\"><span class=\"quick-font-color\" ng-click=\"minder.queryCommandState('forecolor') === -1 || minder.execCommand('forecolor', foreColor)\"><i class=\"iconfont icon-zitiyanse\"></i> <span class=\"font-color-preview\" ng-style=\"{ 'background-color': foreColor }\" ng-click=\"minder.queryCommandState('forecolor') === -1 || minder.execCommand('forecolor', foreColor)\"></span></span> <span color-picker class=\"font-color\" set-color=\"setDefaultColor()\"><i class=\"iconfont icon-xialajiantou\"></i></span></div><color-panel minder=\"minder\" class=\"inline-directive\"></color-panel></div>"
   );
 
 
   $templateCache.put('ui/directive/hyperLink/hyperLink.html',
-    "<div class=\"hyperlink-group btn-group-vertical\" dropdown is-open=\"isopen\"><div class=\"hyperlink\" title=\"{{ 'link' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addHyperlink()\" ng-disabled=\"minder.queryCommandState('HyperLink') === -1\"><i class=\"iconfont icon-lianjie\"></i></div><div class=\"hyperlink-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('HyperLink') === -1\" title=\"{{ 'link' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xiala\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addHyperlink()\">{{ 'insertlink' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('HyperLink', null)\">{{ 'removelink' | lang: 'ui' }}</a></li></ul></div>"
+    "<div class=\"hyperlink-group btn-group-vertical\" dropdown is-open=\"isopen\"><div class=\"hyperlink\" title=\"{{ 'link' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addHyperlink()\" ng-disabled=\"minder.queryCommandState('HyperLink') === -1\"><i class=\"iconfont icon-lianjie\"></i></div><div class=\"hyperlink-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('HyperLink') === -1\" title=\"{{ 'link' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xialajiantou\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addHyperlink()\">{{ 'insertlink' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('HyperLink', null)\">{{ 'removelink' | lang: 'ui' }}</a></li></ul></div>"
   );
 
 
   $templateCache.put('ui/directive/imageBtn/imageBtn.html',
-    "<div class=\"btn-group-vertical\" dropdown is-open=\"isopen\"><div class=\"image-btn\" title=\"{{ 'image' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addImage()\" ng-disabled=\"minder.queryCommandState('Image') === -1\"><i class=\"iconfont icon-tupian\"></i></div><div class=\"image-btn-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('Image') === -1\" title=\"{{ 'image' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xiala\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addImage()\">{{ 'insertimage' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('Image', '')\">{{ 'removeimage' | lang: 'ui' }}</a></li></ul></div>"
+    "<div class=\"btn-group-vertical\" dropdown is-open=\"isopen\"><div class=\"image-btn\" title=\"{{ 'image' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addImage()\" ng-disabled=\"minder.queryCommandState('Image') === -1\"><i class=\"iconfont icon-tupian\"></i></div><div class=\"image-btn-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('Image') === -1\" title=\"{{ 'image' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xialajiantou\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addImage()\">{{ 'insertimage' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('Image', '')\">{{ 'removeimage' | lang: 'ui' }}</a></li></ul></div>"
   );
 
 
   $templateCache.put('ui/directive/kityminderEditor/kityminderEditor.html',
-    "<div class=\"minder-editor-container\"><div search-box minder=\"minder\" ng-if=\"minder\"></div><div class=\"minder-editor\"></div><div class=\"km-note\" note-editor minder=\"minder\" ng-if=\"minder\"></div><div class=\"note-previewer\" note-previewer ng-if=\"minder\"></div><div class=\"navigator\" navigator minder=\"minder\" ng-if=\"minder\"></div></div>"
+    "<div class=\"minder-editor-container\"><div search-box minder=\"minder\" ng-if=\"minder\"></div><div class=\"minder-editor\"></div><div class=\"km-note\" note-editor minder=\"minder\" ng-if=\"minder\"></div><div class=\"note-previewer\" note-previewer ng-if=\"minder\"></div><div class=\"navigator\" navigator minder=\"minder\" ng-if=\"minder\"></div><context-menu ng-if=\"minder\" minder=\"minder\" editor=\"editor\"></context-menu></div>"
   );
 
 
@@ -2140,7 +2181,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/noteBtn/noteBtn.html',
-    "<div class=\"btn-group-vertical note-btn-group\" dropdown is-open=\"isopen\"><div class=\"note-btn\" title=\"{{ 'note' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addNote()\" ng-disabled=\"minder.queryCommandState('note') === -1\"><i class=\"iconfont icon-beizhu\"></i></div><div class=\"note-btn-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('note') === -1\" title=\"{{ 'note' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xiala\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addNote()\">{{ 'insertnote' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('note', null)\">{{ 'removenote' | lang: 'ui' }}</a></li></ul></div>"
+    "<div class=\"btn-group-vertical note-btn-group\" dropdown is-open=\"isopen\"><div class=\"note-btn\" title=\"{{ 'note' | lang: 'ui' }}\" ng-class=\"{'active': isopen}\" ng-click=\"addNote()\" ng-disabled=\"minder.queryCommandState('note') === -1\"><i class=\"iconfont icon-beizhu\"></i></div><div class=\"note-btn-caption dropdown-toggle\" ng-disabled=\"minder.queryCommandState('note') === -1\" title=\"{{ 'note' | lang: 'ui' }}\" dropdown-toggle><i class=\"iconfont icon-xialajiantou\"></i></div><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"addNote()\">{{ 'insertnote' | lang: 'ui' }}</a></li><li><a href ng-click=\"minder.execCommand('note', null)\">{{ 'removenote' | lang: 'ui' }}</a></li></ul></div>"
   );
 
 
@@ -2612,6 +2653,7 @@ angular.module('kityminderEditor').service('lang.zh-cn', function() {
         bold: '加粗 (Ctrl + U)',
         italic: '斜体 (Ctrl + I)',
         forecolor: '字体颜色',
+        backgroundcolor: '背景颜色',
         fontfamily: '字体',
         fontsize: '字号',
         layoutstyle: '主题',
@@ -3361,6 +3403,213 @@ angular.module('kityminderEditor')
 			}
 		}
 	});
+angular.module('kityminderEditor').directive('contextMenu', [
+  'commandBinder',
+  function(commandBinder) {
+    return {
+      restrict: 'E',
+      templateUrl: 'ui/directive/contextMenu/contextMenu.html',
+      scope: {
+        minder: '=',
+        editor: '=',
+      },
+      replace: true,
+      link: function($scope, element) {
+        var minder = $scope.minder
+        var editor = $scope.editor
+        var container = angular.element(editor.selector)
+
+        $scope.visible = false
+        $scope.menus = [
+          {
+            label: '插入主题',
+            shortcutkey: 'Tab',
+            disabled: function() {
+              return minder.queryCommandState('AppendChildNode') === -1
+            },
+            action: function() {
+              minder.execCommand('AppendChildNode', '分支主题')
+              editor.editText()
+            },
+          },
+          {
+            label: '插入同级主题',
+            shortcutkey: 'Enter',
+            disabled: function() {
+              return minder.queryCommandState('AppendSiblingNode') === -1
+            },
+            action: function() {
+              minder.execCommand('AppendSiblingNode', '分支主题')
+              editor.editText()
+            },
+          },
+          {
+            label: '插入上一级主题',
+            shortcutkey: 'Shift + Tab',
+            disabled: function() {
+              return minder.queryCommandState('AppendParentNode') === -1
+            },
+            action: function() {
+              minder.execCommand('AppendParentNode', '分支主题')
+              editor.editText()
+            },
+          },
+          {
+            label: '上移',
+            shortcutkey: 'Alt + Up',
+            disabled: function() {
+              return false
+            },
+            action: function() {
+              minder.execCommand('ArrangeUp')
+            },
+            cutLine: true,
+          },
+          {
+            label: '下移',
+            shortcutkey: 'Alt + Down',
+            action: function() {
+              minder.execCommand('ArrangeDown')
+            },
+          },
+          {
+            label: '撤销',
+            shortcutkey: 'Ctrl + Z',
+            disabled: function() {
+              return editor.history.hasUndo() == false
+            },
+            action: function() {
+              editor.history.undo()
+            },
+            cutLine: true,
+          },
+          // {
+          //   label: '重做',
+          //   shortcutkey: 'Ctrl + Y',
+          //   disabled: function() {
+          //     return editor.history.hasRedo() == false
+          //   },
+          //   action: function() {
+          //     editor.history.redo()
+          //   },
+          // },
+          {
+            label: '复制' + (kity.Browser.gecko ? '(请使用快捷键)' : ''),
+            shortcutkey: 'Ctrl + C',
+            disabled: function() {
+              return kity.Browser.gecko
+            },
+            action: function(e) {
+              editor.receiver.selectAll()
+              console.log(editor);
+              editor.clipboard.copy(e)
+            },
+          },
+          {
+            label: '剪切' + (kity.Browser.gecko ? '(请使用快捷键)' : ''),
+            shortcutkey: 'Ctrl + X',
+            disabled: function() {
+              return kity.Browser.gecko
+            },
+            action: function(e) {
+              editor.receiver.selectAll()
+              editor.clipboard.cut(e)
+            },
+          },
+          {
+            label: '粘贴(请使用快捷键)',
+            shortcutkey: 'Ctrl + V',
+            disabled: function() {
+              return true
+            },
+            action: function() {
+            },
+          },
+          {
+            label: '删除',
+            shortcutkey: 'Delete',
+            disabled: function() {
+              return minder.queryCommandState('RemoveNode') === -1
+            },
+            action: function() {
+              minder.execCommand('RemoveNode')
+            },
+          },
+        ]
+        $scope.position = {
+          top: 0,
+          left: 0,
+        }
+
+        $scope.menuAction = function(e, actionFn) {
+          actionFn(e)
+          $scope.visible = false
+        }
+
+        var downX, downY
+        var MOUSE_RB = 2 // 右键
+        var MENU_WIDTH = 220 // 菜单项高度
+        var ITEM_HEIGHT = 36 // 菜单项高度
+        var SPACE_PIXEL = 5 // 间隔
+
+        editor.receiver.listen(function() {
+          $scope.visible = false
+          $scope.$digest()
+        })
+        element.on('contextmenu', function(e) {
+          e.preventDefault()
+        })
+        container.on('mousedown', function(e) {
+          if (e.button == MOUSE_RB) {
+            e.preventDefault()
+            downX = e.clientX
+            downY = e.clientY
+          }
+          $scope.visible = false
+          $scope.$digest()
+        })
+
+        container.on('mousewheel', function(e) {
+          $scope.visible = false
+          $scope.$digest()
+        })
+
+        container.on('mouseup', function(e) {
+          // if (fsm.state() != 'normal') {
+          //     return;
+          // }
+          if (e.button != 2 || e.clientX != downX || e.clientY != downY) {
+            return
+          }
+          if (!minder.getSelectedNode()) {
+            return
+          }
+          var editorOffsetTop = $('.minder-editor-container').offset().top
+          var top = e.pageY - editorOffsetTop,
+            left = e.pageX
+          var containerHeight = container.height()
+          var containerWidth = container.width()
+          var menuHeight = $scope.menus.length * ITEM_HEIGHT
+          if (top + menuHeight > containerHeight) {
+            top = top - menuHeight - SPACE_PIXEL
+          } else {
+            top = top + SPACE_PIXEL
+          }
+          if (left + MENU_WIDTH > containerWidth) {
+            left = left - MENU_WIDTH - SPACE_PIXEL
+          } else {
+            left = left + SPACE_PIXEL
+          }
+          $scope.position.top = top
+          $scope.position.left = left
+          $scope.visible = true
+          $scope.$digest()
+        })
+      },
+    }
+  },
+])
+
 angular.module('kityminderEditor').directive('editBar', [ 'commandBinder', function(commandBinder) {
   return {
     restrict: 'A',
@@ -3381,6 +3630,12 @@ angular.module('kityminderEditor').directive('editBar', [ 'commandBinder', funct
       scope.toggleBottomBar = function(val) {
         scope.currentVisible = scope.currentVisible === val ? '' : val
       }
+
+      scope.$watch('commandDisabled', function(e) {
+        if (scope.commandDisabled) {
+          scope.currentVisible = ''
+        }
+      })
     },
   }
 }])
@@ -4527,8 +4782,8 @@ angular.module('kityminderEditor')
 			scope: {
 				minder: '='
 			},
-            replace: true,
-			link: function($scope) {
+      replace: true,
+			link: function($scope, element) {
 				$scope.templateList = kityminder.Minder.getTemplateList();
 				$scope.templateIconList = {
 					default: 'icon-siweidaotu',
@@ -4541,6 +4796,7 @@ angular.module('kityminderEditor')
 			}
 		}
 	});
+	
 angular.module('kityminderEditor')
 	.directive('themeList', function() {
 		return {

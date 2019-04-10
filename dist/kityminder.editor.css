@@ -19,7 +19,7 @@
 .edit-bar .iconfont {
   color: #666;
 }
-.edit-bar .iconfont.icon-xiala {
+.edit-bar .iconfont.icon-xialajiantou {
   font-size: 12px;
 }
 .edit-bar * {
@@ -286,6 +286,40 @@ div.minder-editor-container {
   overflow: hidden;
   position: absolute;
   z-index: -1;
+}
+.km-context-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 111;
+}
+.km-menu-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  user-select: none;
+}
+.km-menu-item {
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+.km-menu-item:hover {
+  background-color: #F4F8FF;
+  color: #3B87F8;
+}
+.km-menu-item.cur-line {
+  border-top: 1px solid #eee;
+}
+.km-menu-item[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
 }
 .top-tab .nav-tabs {
   background-color: #e1e1e1;
@@ -1206,6 +1240,7 @@ div a.theme-item {
 }
 .font-operator .font-size-list {
   display: inline-block;
+  margin-left: 8px;
 }
 .font-operator .font-family-list {
   display: inline-block;
@@ -1225,7 +1260,7 @@ div a.theme-item {
   display: inline-block;
 }
 .current-font-family {
-  width: 75px;
+  width: 65px;
   overflow: hidden;
 }
 .current-font-size {

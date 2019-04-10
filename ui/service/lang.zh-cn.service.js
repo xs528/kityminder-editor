@@ -285,6 +285,7 @@ angular.module('kityminderEditor').service('lang.zh-cn', function() {
         bold: '加粗 (Ctrl + U)',
         italic: '斜体 (Ctrl + I)',
         forecolor: '字体颜色',
+        backgroundcolor: '背景颜色',
         fontfamily: '字体',
         fontsize: '字号',
         layoutstyle: '主题',

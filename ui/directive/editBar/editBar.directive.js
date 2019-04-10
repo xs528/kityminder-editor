@@ -18,6 +18,12 @@ angular.module('kityminderEditor').directive('editBar', [ 'commandBinder', funct
       scope.toggleBottomBar = function(val) {
         scope.currentVisible = scope.currentVisible === val ? '' : val
       }
+
+      scope.$watch('commandDisabled', function(e) {
+        if (scope.commandDisabled) {
+          scope.currentVisible = ''
+        }
+      })
     },
   }
 }])

@@ -61,7 +61,7 @@ define(function(require, exports, module) {
                 if (kity.Browser.safari) {
                     receiverElement.innerHTML = '';
                 }
-                return fsm.jump('hotbox', 'space-trigger');
+                // return fsm.jump('hotbox', 'space-trigger');
             }
 
             /**
@@ -171,7 +171,7 @@ define(function(require, exports, module) {
             if (!minder.getSelectedNode()) {
                 return;
             }
-            fsm.jump('hotbox', 'content-menu');
+            // fsm.jump('hotbox', 'content-menu');
         }, false);
 
         // 阻止热盒事件冒泡，在热盒正确执行前导致热盒关闭

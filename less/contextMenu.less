@@ -1,0 +1,37 @@
+.km {
+    &-context-menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 111;
+    }
+    &-menu-list {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 220px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0, 0.15);
+        user-select: none;
+    }
+    &-menu-item {
+        display: flex;
+        justify-content: space-between;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 16px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #F4F8FF;
+            color: #3B87F8;
+        }
+        &.cur-line {
+            border-top: 1px solid #eee;
+        }
+        &[disabled] {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+}

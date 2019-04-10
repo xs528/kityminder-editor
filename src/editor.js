@@ -35,6 +35,5 @@ define(function(require, exports, module) {
     assemble(require('./runtime/priority'));
     assemble(require('./runtime/progress'));
 
-
     return module.exports = KMEditor;
 });
