@@ -96,7 +96,6 @@ angular.module('kityminderEditor').directive('contextMenu', [
             },
             action: function(e) {
               editor.receiver.selectAll()
-              console.log(editor);
               editor.clipboard.copy(e)
             },
           },
@@ -173,7 +172,7 @@ angular.module('kityminderEditor').directive('contextMenu', [
           // if (fsm.state() != 'normal') {
           //     return;
           // }
-          if (e.button != 2 || e.clientX != downX || e.clientY != downY) {
+          if (e.button != 2 || Math.abs(e.clientX - downX) > 5 || Math.abs(e.clientY - downY) > 5) {
             return
           }
           if (!minder.getSelectedNode()) {

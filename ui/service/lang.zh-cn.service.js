@@ -282,7 +282,7 @@ angular.module('kityminderEditor').service('lang.zh-cn', function() {
         recycle: '回收站',
         newdir: '未命名目录',
 
-        bold: '加粗 (Ctrl + U)',
+        bold: '加粗 (Ctrl + B)',
         italic: '斜体 (Ctrl + I)',
         forecolor: '字体颜色',
         backgroundcolor: '背景颜色',

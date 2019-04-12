@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2019-04-10
+ * kityminder-editor - v1.0.67 - 2019-04-12
  * https://github.com/fex-team/kityminder-editor
  * GitHub: https://github.com/fex-team/kityminder-editor 
  * Copyright (c) 2019 ; Licensed 
@@ -1442,6 +1442,9 @@ _p[14] = {
             minder.setTheme(null);
             minder.select(minder.getRoot(), true);
             minder.execCommand("text", "中心主题");
+            this.device = {
+                isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            };
             // 导出给其它 Runtime 使用
             this.minder = minder;
         }
@@ -1632,7 +1635,7 @@ _p[18] = {
         function ReceiverRuntime() {
             var fsm = this.fsm;
             var minder = this.minder;
-            var me = this;
+            var _this = this;
             // 接收事件的 div
             var element = document.createElement("div");
             element.contentEditable = true;
@@ -1646,7 +1649,10 @@ _p[18] = {
             element.onkeydown = element.onkeypress = element.onkeyup = dispatchKeyEvent;
             element.addEventListener("compositionstart", dispatchKeyEvent);
             // element.addEventListener('compositionend', dispatchKeyEvent);
-            this.container.appendChild(element);
+            // 移动设备屏蔽编辑
+            if (!this.device.isMobile) {
+                this.container.appendChild(element);
+            }
             // receiver 对象
             var receiver = {
                 element: element,
@@ -2136,7 +2142,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/editBar/editBar.html',
-    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div></div>"
+    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"layout-btn btn-group-vertical\" ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" ng-disabled=\"minder.queryCommandState('resetlayout') === -1\" title=\"{{ 'resetlayout' | lang: 'ui/command' }}\"><i class=\"iconfont icon-zhenglibuju\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div></div>"
   );
 
 
@@ -2650,7 +2656,7 @@ angular.module('kityminderEditor').service('lang.zh-cn', function() {
         recycle: '回收站',
         newdir: '未命名目录',
 
-        bold: '加粗 (Ctrl + U)',
+        bold: '加粗 (Ctrl + B)',
         italic: '斜体 (Ctrl + I)',
         forecolor: '字体颜色',
         backgroundcolor: '背景颜色',
@@ -3501,7 +3507,6 @@ angular.module('kityminderEditor').directive('contextMenu', [
             },
             action: function(e) {
               editor.receiver.selectAll()
-              console.log(editor);
               editor.clipboard.copy(e)
             },
           },
@@ -3578,7 +3583,7 @@ angular.module('kityminderEditor').directive('contextMenu', [
           // if (fsm.state() != 'normal') {
           //     return;
           // }
-          if (e.button != 2 || e.clientX != downX || e.clientY != downY) {
+          if (e.button != 2 || Math.abs(e.clientX - downX) > 5 || Math.abs(e.clientY - downY) > 5) {
             return
           }
           if (!minder.getSelectedNode()) {

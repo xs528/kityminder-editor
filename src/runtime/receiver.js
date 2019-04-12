@@ -14,7 +14,7 @@ define(function(require, exports, module) {
     function ReceiverRuntime() {
         var fsm = this.fsm;
         var minder = this.minder;
-        var me = this;
+        var _this = this;
 
         // 接收事件的 div
         var element = document.createElement('div');
@@ -29,7 +29,11 @@ define(function(require, exports, module) {
         element.onkeydown = element.onkeypress = element.onkeyup = dispatchKeyEvent;
         element.addEventListener('compositionstart', dispatchKeyEvent);
         // element.addEventListener('compositionend', dispatchKeyEvent);
-        this.container.appendChild(element);
+
+        // 移动设备屏蔽编辑
+        if (!this.device.isMobile) {
+            this.container.appendChild(element);
+        }
 
         // receiver 对象
         var receiver = {

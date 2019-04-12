@@ -23,6 +23,10 @@ define(function(require, exports, module) {
         minder.select(minder.getRoot(), true);
         minder.execCommand('text', '中心主题');
 
+        this.device = {
+            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+        };
+
         // 导出给其它 Runtime 使用
         this.minder = minder;
     }

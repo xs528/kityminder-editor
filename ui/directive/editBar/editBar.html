@@ -23,6 +23,14 @@
   >
     <i class="iconfont icon-yangshi"></i>
   </div>
+  <div
+    class="layout-btn btn-group-vertical"
+    ng-click="minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')"
+    ng-disabled="minder.queryCommandState('resetlayout') === -1"
+    title="{{ 'resetlayout' | lang: 'ui/command' }}"
+  >
+    <i class="iconfont icon-zhenglibuju"></i>
+  </div>
   <div class="bottom-bar" ng-if="currentVisible">
     <div class="task-wrap" ng-if="currentVisible === visibleMap.task">
       <priority-editor minder="minder"></priority-editor>

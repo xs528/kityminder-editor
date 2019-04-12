@@ -37,17 +37,21 @@
   vertical-align: middle;
 }
 .edit-bar .task-btn,
-.edit-bar .template-btn {
+.edit-bar .template-btn,
+.edit-bar .layout-btn {
   width: 30px;
 }
 .edit-bar .task-btn:hover,
-.edit-bar .template-btn:hover {
+.edit-bar .template-btn:hover,
+.edit-bar .layout-btn:hover {
   background-color: #f3f3f3;
 }
 .edit-bar .task-btn:active,
 .edit-bar .template-btn:active,
+.edit-bar .layout-btn:active,
 .edit-bar .task-btn.active,
-.edit-bar .template-btn.active {
+.edit-bar .template-btn.active,
+.edit-bar .layout-btn.active {
   background-color: #e6e6e6;
 }
 .edit-bar .bottom-bar {
