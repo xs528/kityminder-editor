@@ -858,6 +858,7 @@ div.minder-editor-container {
   margin: 0 5px;
   padding: 2px;
   line-height: normal;
+  border-radius: 3px;
 }
 .km-priority .km-priority-item .km-priority-icon {
   background: url(images/iconpriority.png) repeat-y;
@@ -910,6 +911,7 @@ div.minder-editor-container {
   margin: 0 5px;
   padding: 2px;
   line-height: normal;
+  border-radius: 3px;
 }
 .km-progress .km-progress-item .km-progress-icon {
   background: url(images/iconprogress.png) repeat-y;

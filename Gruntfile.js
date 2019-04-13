@@ -97,7 +97,7 @@ module.exports = function(grunt) {
             'bower_components/kity/dist/kity.js',
             'bower_components/hotbox/hotbox.js',
             'bower_components/json-diff/json-diff.js',
-            'node_modules/kityminder-core/dist/kityminder.core.js',
+            'kityminder-core/kityminder.core.js',
             'bower_components/color-picker/dist/color-picker.js',
           ],
         },
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
             'bower_components/bootstrap/dist/css/bootstrap.css',
             'bower_components/codemirror/lib/codemirror.css',
             'bower_components/hotbox/hotbox.css',
-            'node_modules/kityminder-core/dist/kityminder.core.css',
+            'kityminder-core/kityminder.core.css',
             'bower_components/color-picker/dist/color-picker.min.css',
           ],
         },
@@ -233,7 +233,7 @@ module.exports = function(grunt) {
     // browser sync for dev
     browserSync: {
       bsFiles: {
-        src: ['src/**', 'ui/**', 'dist/*.css'],
+        src: ['src/**', 'ui/**', 'dist/*.css', 'kityminder-core/*'],
       },
       options: {
         watchTask: true,
