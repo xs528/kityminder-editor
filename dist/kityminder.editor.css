@@ -698,11 +698,11 @@ div.minder-editor-container {
   padding: 5px 10px;
   background: white;
   position: absolute;
-  top: 50px;
+  top: 0;
   right: 0;
   bottom: 0;
   left: auto;
-  z-index: 3;
+  z-index: 11;
   border-radius: 0;
 }
 .km-note.panel {

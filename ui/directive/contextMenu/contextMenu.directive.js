@@ -17,7 +17,7 @@ angular.module('kityminderEditor').directive('contextMenu', [
         $scope.visible = false
         $scope.menus = [
           {
-            label: '插入主题',
+            label: '插入下级主题',
             shortcutkey: 'Tab',
             disabled: function() {
               return minder.queryCommandState('AppendChildNode') === -1
@@ -167,11 +167,10 @@ angular.module('kityminderEditor').directive('contextMenu', [
           $scope.visible = false
           $scope.$digest()
         })
-
         container.on('mouseup', function(e) {
-          // if (fsm.state() != 'normal') {
-          //     return;
-          // }
+          if (minder.getStatus() == 'readonly') {
+            return;
+          }
           if (e.button != 2 || Math.abs(e.clientX - downX) > 5 || Math.abs(e.clientY - downY) > 5) {
             return
           }

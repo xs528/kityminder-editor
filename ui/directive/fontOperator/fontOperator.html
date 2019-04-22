@@ -7,7 +7,7 @@
       title="{{ 'fontfamily' | lang: 'ui' }}"
     >
       <span class="current-font-family ellipsis">{{
-        getFontfamilyName(minder.queryCommandValue('fontfamily')) || '字体'
+        getFontfamilyName(minder.queryCommandValue('fontfamily')) || fontFamilyList[1].name
       }}</span
       ><i class="trangle"></i>
     </div>
