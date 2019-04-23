@@ -167,6 +167,7 @@ angular.module('kityminderEditor').directive('contextMenu', [
           $scope.visible = false
           $scope.$digest()
         })
+
         container.on('mouseup', function(e) {
           if (minder.getStatus() == 'readonly') {
             return;

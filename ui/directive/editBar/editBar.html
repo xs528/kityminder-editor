@@ -26,7 +26,7 @@
   <div
     class="layout-btn btn-group-vertical"
     ng-click="minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')"
-    ng-disabled="minder.queryCommandState('resetlayout') === -1"
+    ng-disabled="minder.getStatus() === 'readonly'"
     title="{{ 'resetlayout' | lang: 'ui/command' }}"
   >
     <i class="iconfont icon-zhenglibuju"></i>

@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2019-04-22
+ * kityminder-editor - v1.0.67 - 2019-04-23
  * https://github.com/fex-team/kityminder-editor
  * GitHub: https://github.com/fex-team/kityminder-editor 
  * Copyright (c) 2019 ; Licensed 
@@ -2142,7 +2142,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/editBar/editBar.html',
-    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"layout-btn btn-group-vertical\" ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" ng-disabled=\"minder.queryCommandState('resetlayout') === -1\" title=\"{{ 'resetlayout' | lang: 'ui/command' }}\"><i class=\"iconfont icon-zhenglibuju\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div></div>"
+    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"layout-btn btn-group-vertical\" ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" ng-disabled=\"minder.getStatus() === 'readonly'\" title=\"{{ 'resetlayout' | lang: 'ui/command' }}\"><i class=\"iconfont icon-zhenglibuju\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div></div>"
   );
 
 
@@ -2172,7 +2172,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/kityminderViewer/kityminderViewer.html',
-    "<div class=\"minder-editor-container\"><div class=\"minder-viewer\"></div><div class=\"note-previewer\" note-previewer ng-if=\"minder\"></div><div class=\"navigator\" navigator minder=\"minder\" ng-if=\"minder\"></div></div>"
+    "<div class=\"minder-editor-container\"><div class=\"minder-viewer\"></div><div class=\"note-previewer\" note-previewer ng-if=\"minder\"></div><div class=\"navigator\" navigator minder=\"minder\" ng-if=\"minder\"></div><context-menu ng-if=\"minder\" minder=\"minder\" editor=\"editor\"></context-menu></div>"
   );
 
 
@@ -3578,6 +3578,7 @@ angular.module('kityminderEditor').directive('contextMenu', [
           $scope.visible = false
           $scope.$digest()
         })
+
         container.on('mouseup', function(e) {
           if (minder.getStatus() == 'readonly') {
             return;
