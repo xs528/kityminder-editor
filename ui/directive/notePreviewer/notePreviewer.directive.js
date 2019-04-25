@@ -61,17 +61,15 @@ angular.module('kityminderEditor')
 					scope.noteContent = $sce.trustAsHtml(html);
 					scope.$apply(); // 让浏览器重新渲染以获取 previewer 提示框的尺寸
 
-					var cw = $($container[0]).width();
-					var ch = $($container[0]).height();
+					var cw = $container.width();
+					var ch = $container.height();
 					var pw = $($previewer).outerWidth();
 					var ph = $($previewer).outerHeight();
-
-					var x = b.cx - pw / 2 - $container[0].offsetLeft;
-					var y = b.bottom + 10 - $container[0].offsetTop;
-
+					var x = b.cx - pw / 2 - $container.offset().left;
+					var y = b.bottom + 10 - $container.offset().top;
 					if (x < 0) x = 10;
-					if (x + pw > cw) x = b.left - pw - 10 - $container[0].offsetLeft;
-					if (y + ph > ch) y = b.top - ph - 10 - $container[0].offsetTop;
+					if (x + pw > cw) x = b.left - pw - 10 - $container.offset().left;
+					if (y + ph > ch) y = b.top - ph - 10 - $container.offset().top;
 
 
 					scope.previewerStyle = {

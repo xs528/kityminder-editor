@@ -715,7 +715,6 @@ div.minder-editor-container {
 .km-note.panel .panel-heading .close-note-editor {
   width: 15px;
   height: 15px;
-  display: inline-block;
   float: right;
 }
 .km-note.panel .panel-heading .close-note-editor:hover {
@@ -740,14 +739,15 @@ div.minder-editor-container {
 }
 #previewer-content {
   position: absolute;
-  background: #FFD;
+  background: #fff;
   padding: 5px 15px;
-  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   max-width: 400px;
   max-height: 200px;
   overflow: auto;
   z-index: 10;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   word-break: break-all;
   font-size: 12px;
   -webkit-user-select: text;
@@ -1542,4 +1542,3 @@ div a.theme-item {
 .search-box .search-addon {
   background-color: #fff;
 }
-/*# sourceMappingURL=kityminder.editor.css.map */
