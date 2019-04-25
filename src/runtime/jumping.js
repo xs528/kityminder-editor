@@ -53,6 +53,10 @@ define(function(require, exports, module) {
         // normal -> *
         receiver.listen('normal', function(e) {
             // 为了防止处理进入edit模式而丢失处理的首字母,此时receiver必须为enable
+            if (minder.isReadonly()) {
+                receiver.disable();
+                return;
+            };
             receiver.enable();
             // normal -> hotbox
             if (e.is('Space')) {
@@ -61,6 +65,7 @@ define(function(require, exports, module) {
                 if (kity.Browser.safari) {
                     receiverElement.innerHTML = '';
                 }
+                // 屏蔽空格键触发hotbox的操作
                 // return fsm.jump('hotbox', 'space-trigger');
             }
 

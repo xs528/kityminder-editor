@@ -1,9 +1,12 @@
 angular.module('kityminderEditor', [
     'ui.bootstrap',
 	'ui.codemirror',
-	'ui.colorpicker'
+	'ui.colorpicker',
 ])
-	.config(function($sceDelegateProvider) {
+	.config(function($sceDelegateProvider, $tooltipProvider) {
+		$tooltipProvider.options({
+			placement: 'bottom',
+		})
 		$sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
 			'self',
@@ -12,4 +15,4 @@ angular.module('kityminderEditor', [
             'http://cq01-fe-rdtest01.vm.baidu.com:8910/**',
             'http://agroup.baidu.com:8911/**'
 		]);
-	});
+	})

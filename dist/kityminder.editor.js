@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2019-04-23
+ * kityminder-editor - v1.0.67 - 2019-04-25
  * https://github.com/fex-team/kityminder-editor
  * GitHub: https://github.com/fex-team/kityminder-editor 
  * Copyright (c) 2019 ; Licensed 
@@ -1296,6 +1296,10 @@ _p[13] = {
             // normal -> *
             receiver.listen("normal", function(e) {
                 // 为了防止处理进入edit模式而丢失处理的首字母,此时receiver必须为enable
+                if (minder.isReadonly()) {
+                    receiver.disable();
+                    return;
+                }
                 receiver.enable();
                 // normal -> hotbox
                 if (e.is("Space")) {
@@ -2106,9 +2110,12 @@ function use(name) {
 angular.module('kityminderEditor', [
     'ui.bootstrap',
 	'ui.codemirror',
-	'ui.colorpicker'
+	'ui.colorpicker',
 ])
-	.config(["$sceDelegateProvider", function($sceDelegateProvider) {
+	.config(["$sceDelegateProvider", "$tooltipProvider", function($sceDelegateProvider, $tooltipProvider) {
+		$tooltipProvider.options({
+			placement: 'bottom',
+		})
 		$sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
 			'self',
@@ -2117,7 +2124,7 @@ angular.module('kityminderEditor', [
             'http://cq01-fe-rdtest01.vm.baidu.com:8910/**',
             'http://agroup.baidu.com:8911/**'
 		]);
-	}]);
+	}])
 angular.module('kityminderEditor').run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -2142,7 +2149,7 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
 
   $templateCache.put('ui/directive/editBar/editBar.html',
-    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"layout-btn btn-group-vertical\" ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" ng-disabled=\"minder.getStatus() === 'readonly'\" title=\"{{ 'resetlayout' | lang: 'ui/command' }}\"><i class=\"iconfont icon-zhenglibuju\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div></div>"
+    "<div class=\"edit-bar\"><undo-redo editor=\"editor\"></undo-redo><append-node minder=\"minder\"></append-node><font-operator minder=\"minder\" class=\"inline-directive\"></font-operator><hyper-link minder=\"minder\"></hyper-link><image-btn minder=\"minder\"></image-btn><note-btn minder=\"minder\"></note-btn><div class=\"task-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.task}\" title=\"{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.task)\" ng-disabled=\"commandDisabled\"><i class=\"iconfont icon-renwu\"></i></div><div class=\"template-btn btn-group-vertical\" ng-class=\"{'active': currentVisible === visibleMap.template}\" title=\"{{ 'layout' | lang: 'panels' }}\" ng-click=\"toggleBottomBar(visibleMap.template)\" ng-disabled=\"minder.queryCommandState('template') === -1\"><i class=\"iconfont icon-yangshi\"></i></div><div class=\"layout-btn btn-group-vertical\" ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" ng-disabled=\"minder.getStatus() === 'readonly'\" title=\"{{ 'resetlayout' | lang: 'ui/command' }}\"><i class=\"iconfont icon-zhenglibuju\"></i></div><div class=\"bottom-bar\" ng-if=\"currentVisible\"><div class=\"task-wrap\" ng-if=\"currentVisible === visibleMap.task\"><priority-editor minder=\"minder\"></priority-editor><progress-editor minder=\"minder\"></progress-editor></div><div class=\"template-wrap\" ng-if=\"currentVisible === visibleMap.template\"><template-list minder=\"minder\" class=\"inline-directive\"></template-list></div></div><div class=\"mind-tooltip\">{{$root.tooltipVal}}</div></div>"
   );
 
 
@@ -2178,6 +2185,11 @@ angular.module('kityminderEditor').run(['$templateCache', function($templateCach
 
   $templateCache.put('ui/directive/layout/layout.html',
     "<div class=\"readjust-layout\"><a ng-click=\"minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')\" class=\"btn-wrap\" ng-disabled=\"minder.queryCommandState('resetlayout') === -1\"><span class=\"btn-icon reset-layout-icon\"></span> <span class=\"btn-label\">{{ 'resetlayout' | lang: 'ui/command' }}</span></a></div>"
+  );
+
+
+  $templateCache.put('ui/directive/mindTooltip/mindTooltip.html',
+    "<div class=\"km-btn-group append-group\"></div>"
   );
 
 
@@ -3615,35 +3627,38 @@ angular.module('kityminderEditor').directive('contextMenu', [
   },
 ])
 
-angular.module('kityminderEditor').directive('editBar', [ 'commandBinder', function(commandBinder) {
-  return {
-    restrict: 'A',
-    templateUrl: 'ui/directive/editBar/editBar.html',
-    scope: {
-      minder: '=',
-      editor: '=',
-    },
-    link: function(scope) {
-      scope.visibleMap = {
-        task: 'task',
-        template: 'template',
-      }
-      scope.currentVisible = ''
-
-      commandBinder.bind(minder, 'priority', scope);
-
-      scope.toggleBottomBar = function(val) {
-        scope.currentVisible = scope.currentVisible === val ? '' : val
-      }
-
-      scope.$watch('commandDisabled', function(e) {
-        if (scope.commandDisabled) {
-          scope.currentVisible = ''
+angular.module('kityminderEditor').directive('editBar', [
+  'commandBinder',
+  function(commandBinder) {
+    return {
+      restrict: 'A',
+      templateUrl: 'ui/directive/editBar/editBar.html',
+      scope: {
+        minder: '=',
+        editor: '=',
+      },
+      link: function(scope) {
+        scope.visibleMap = {
+          task: 'task',
+          template: 'template',
         }
-      })
-    },
-  }
-}])
+        scope.currentVisible = ''
+
+        commandBinder.bind(minder, 'priority', scope)
+
+        scope.toggleBottomBar = function(val) {
+          scope.currentVisible = scope.currentVisible === val ? '' : val
+        }
+
+        scope.$watch('commandDisabled', function(e) {
+          if (scope.commandDisabled) {
+            scope.currentVisible = ''
+          }
+        })
+      },
+    }
+  },
+])
 
 angular.module('kityminderEditor')
     .directive('expandLevel', function() {
@@ -3929,6 +3944,24 @@ angular.module('kityminderEditor')
 			}
 		}
 	});
+angular.module('kityminderEditor')
+    .directive('mindTooltip', ['$rootScope', function($rootScope) {
+        return {
+            restrict: 'A',
+            // templateUrl: 'ui/directive/mindTooltip/mindTooltip.html',
+            scope: {
+                minder: '='
+            },
+            replace: true,
+            link: function($scope, element, attrs) {
+                element.on('mouseenter', function(e) {
+                    $rootScope.tooltipVal = attrs['mindTooltip'];
+                }).on('mouseleave', function(e) {
+                    $rootScope.tooltipVal = '';
+                })
+            }
+        }
+    }]);
 /**
  * @fileOverview
  *
