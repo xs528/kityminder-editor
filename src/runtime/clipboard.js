@@ -175,6 +175,11 @@ define(function(require, exports, module) {
             if (MimeType.whichMimeType(textData) === 'application/km') {
               var nodes = decode(MimeType.getPureText(textData))
               var _node
+              // 普通用户和VIP的节点数限制
+              if (window.app && window.utils.nodeLimiter(window.utils.calcNodeNum(nodes))) {
+                window.app.$root.$emit('node_limit')
+                return
+              }
               sNodes.forEach(function(node) {
                 // 由于粘贴逻辑中为了排除子节点重新排序导致逆序，因此复制的时候倒过来
                 for (var i = nodes.length - 1; i >= 0; i--) {

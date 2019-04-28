@@ -1,8 +1,8 @@
 /*!
  * ====================================================
- * kityminder-editor - v1.0.67 - 2019-04-25
- * https://github.com/fex-team/kityminder-editor
- * GitHub: https://github.com/fex-team/kityminder-editor 
+ * kityminder-editor - v1.0.67 - 2019-04-28
+ * https://github.com/xs528/kityminder-editor
+ * GitHub: https://github.com/xs528/kityminder-editor 
  * Copyright (c) 2019 ; Licensed 
  * ====================================================
  */
@@ -389,6 +389,11 @@ _p[6] = {
                             if (MimeType.whichMimeType(textData) === "application/km") {
                                 var nodes = decode(MimeType.getPureText(textData));
                                 var _node;
+                                console.log(window.utils && window.utils.calcNodeNum(nodes));
+                                if (window.app && window.utils.nodeLimiter(window.utils.calcNodeNum(nodes))) {
+                                    window.app.$root.$emit("node_limit");
+                                    return;
+                                }
                                 sNodes.forEach(function(node) {
                                     // 由于粘贴逻辑中为了排除子节点重新排序导致逆序，因此复制的时候倒过来
                                     for (var i = nodes.length - 1; i >= 0; i--) {
