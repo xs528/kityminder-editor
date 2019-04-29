@@ -6,6 +6,6 @@ angular.module('kityminderEditor')
 			scope: {
 				minder: '='
 			},
-            replace: true
+      replace: true
 		}
 	});

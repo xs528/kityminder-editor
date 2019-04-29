@@ -1,14 +1,14 @@
-<div class="km-btn-group do-group">
+<div class="km-btn-group do-group border-left">
     <div class="km-btn-item undo"
          ng-disabled="editor.history.hasUndo() == false"
          ng-click="editor.history.hasUndo() == false || editor.history.undo();"
-         title="{{ 'undo' | lang:'ui' }}">
+         tooltip="{{ 'undo' | lang:'ui' }}">
         <i class="iconfont icon-chexiao"></i>
     </div>
     <div class="km-btn-item redo"
          ng-disabled="editor.history.hasRedo() == false"
          ng-click="editor.history.hasRedo() == false || editor.history.redo()"
-         title="{{ 'redo' | lang:'ui' }}">
+         tooltip="{{ 'redo' | lang:'ui' }}">
         <i class="iconfont icon-zhongzuo"></i>
     </div>
 </div>

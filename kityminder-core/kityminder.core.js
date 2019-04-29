@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Minder Core - v1.4.50 - 2019-04-28
+ * Kity Minder Core - v1.4.50 - 2019-04-29
  * https://github.com/xs528/kityminder-core
  * GitHub: https://github.com/xs528/kityminder-core.git 
  * Copyright (c) 2019 ; Licensed BSD-3-Clause

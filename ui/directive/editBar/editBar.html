@@ -1,5 +1,6 @@
 <div class="edit-bar">
   <undo-redo editor="editor"></undo-redo>
+  <style-brush minder="minder" class="inline-directive"></style-brush>
   <append-node minder="minder"></append-node>
   <font-operator minder="minder" class="inline-directive"></font-operator>
   <hyper-link minder="minder"></hyper-link>
@@ -8,7 +9,7 @@
   <div
     class="task-btn btn-group-vertical"
     ng-class="{'active': currentVisible === visibleMap.task}"
-    title="{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}"
+    tooltip="{{ 'priority' | lang: 'panels' }}&{{ 'progress' | lang: 'panels' }}"
     ng-click="toggleBottomBar(visibleMap.task)"
     ng-disabled="commandDisabled"
   >
@@ -17,7 +18,7 @@
   <div
     class="template-btn btn-group-vertical"
     ng-class="{'active': currentVisible === visibleMap.template}"
-    title="{{ 'layout' | lang: 'panels' }}"
+    tooltip="{{ 'layout' | lang: 'panels' }}"
     ng-click="toggleBottomBar(visibleMap.template)"
     ng-disabled="minder.queryCommandState('template') === -1"
   >
@@ -27,7 +28,7 @@
     class="layout-btn btn-group-vertical"
     ng-click="minder.queryCommandState('resetlayout') === -1 || minder.execCommand('resetlayout')"
     ng-disabled="minder.getStatus() === 'readonly'"
-    title="{{ 'resetlayout' | lang: 'ui/command' }}"
+    tooltip="{{ 'resetlayout' | lang: 'ui/command' }}"
   >
     <i class="iconfont icon-zhenglibuju"></i>
   </div>

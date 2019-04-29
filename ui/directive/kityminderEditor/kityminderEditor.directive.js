@@ -1,5 +1,5 @@
 angular.module('kityminderEditor')
-	.directive('kityminderEditor', ['config', 'minder.service', 'revokeDialog', function(config, minderService, revokeDialog) {
+	.directive('kityminderEditor', ['config', 'minder.service', 'editbarService', function(config, minderService, editbarService) {
 		return {
 			restrict: 'EA',
 			templateUrl: 'ui/directive/kityminderEditor/kityminderEditor.html',
@@ -8,9 +8,9 @@ angular.module('kityminderEditor')
 				onInit: '&'
 			},
 			link: function(scope, element, attributes) {
+				scope.editbarService = editbarService
 
 				var $minderEditor = element.children('.minder-editor')[0];
-
 				function onInit(editor, minder) {
 					scope.onInit({
 						editor: editor,

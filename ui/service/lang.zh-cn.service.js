@@ -416,6 +416,10 @@ angular.module('kityminderEditor').service('lang.zh-cn', function() {
       resource: {
         resource: '资源...',
       },
+      style_brush: {
+        style_brush: '格式刷，  复制格式',
+        apply_style: '点击节点，应用格式',
+      },
     },
   }
 })

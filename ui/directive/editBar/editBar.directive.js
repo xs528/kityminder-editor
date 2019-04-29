@@ -9,6 +9,7 @@ angular.module('kityminderEditor').directive('editBar', [
         editor: '=',
       },
       link: function(scope) {
+        var minder = scope.minder;
         scope.visibleMap = {
           task: 'task',
           template: 'template',

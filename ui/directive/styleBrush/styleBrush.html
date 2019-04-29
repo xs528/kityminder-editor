@@ -1,0 +1,9 @@
+<div
+  class="style-brush-btn btn-group-vertical"
+  ng-class="{active: data.isActiveStyleBrush}"
+  ng-click="handleStyle()"
+  ng-disabled="isDisabledOfStyleBrush()"
+  tooltip="{{ data.isActiveStyleBrush ? 'apply_style' : 'style_brush' | lang: 'style_brush' }}"
+>
+  <i class="iconfont icon-geshishua"></i>
+</div>

@@ -1,7 +1,7 @@
 <div class="btn-group-vertical note-btn-group" dropdown is-open="isopen">
   <div
     class="note-btn"
-    title="{{ 'note' | lang: 'ui' }}"
+    tooltip="{{ 'note' | lang: 'ui' }}"
     ng-class="{'active': isopen}"
     ng-click="addNote()"
     ng-disabled="minder.queryCommandState('note') === -1"
@@ -9,7 +9,6 @@
 </div><div
     class="note-btn-caption dropdown-toggle"
     ng-disabled="minder.queryCommandState('note') === -1"
-    title="{{ 'note' | lang: 'ui' }}"
     dropdown-toggle
   >
   <i class="trangle"></i>

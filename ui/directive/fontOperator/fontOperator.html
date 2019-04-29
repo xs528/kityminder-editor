@@ -4,7 +4,7 @@
       class="dropdown-toggle current-font-item"
       dropdown-toggle
       ng-disabled="minder.queryCommandState('fontfamily') === -1"
-      title="{{ 'fontfamily' | lang: 'ui' }}"
+      tooltip="{{ 'fontfamily' | lang: 'ui' }}"
     >
       <span class="current-font-family ellipsis">{{
         getFontfamilyName(minder.queryCommandValue('fontfamily')) || fontFamilyList[1].name
@@ -28,7 +28,7 @@
       class="dropdown-toggle current-font-item"
       dropdown-toggle
       ng-disabled="minder.queryCommandState('fontsize') === -1"
-      title="{{ 'fontsize' | lang: 'ui' }}"
+      tooltip="{{ 'fontsize' | lang: 'ui' }}"
     >
       <span class="current-font-size">{{ minder.queryCommandValue('fontsize') || '字号' }}</span
       ><i class="trangle"></i>
@@ -50,20 +50,20 @@
     ng-click="minder.queryCommandState('bold') === -1 || minder.execCommand('bold')"
     ng-class="{'font-bold-selected' : minder.queryCommandState('bold') == 1}"
     ng-disabled="minder.queryCommandState('bold') === -1"
-    title="{{ 'bold' | lang: 'ui' }}"
+    tooltip="{{ 'bold' | lang: 'ui' }}"
   ></span
   ><span
     class="s-btn-icon font-italics iconfont icon-xieti"
     ng-click="minder.queryCommandState('italic') === -1 || minder.execCommand('italic')"
     ng-class="{'font-italics-selected' : minder.queryCommandState('italic') == 1}"
     ng-disabled="minder.queryCommandState('italic') === -1"
-    title="{{ 'italic' | lang: 'ui' }}"
+    tooltip="{{ 'italic' | lang: 'ui' }}"
   >
   </span>
   <div
     class="font-color-wrap"
     ng-disabled="minder.queryCommandState('forecolor') === -1"
-    title="{{ 'forecolor' | lang: 'ui' }}"
+    tooltip="{{ 'forecolor' | lang: 'ui' }}"
   >
     <span
       class="quick-font-color"
