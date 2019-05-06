@@ -46,19 +46,20 @@
     </ul>
   </div>
   <span
-    class="s-btn-icon font-bold iconfont icon-jiacu"
+    class="s-btn-icon font-bold"
     ng-click="minder.queryCommandState('bold') === -1 || minder.execCommand('bold')"
-    ng-class="{'font-bold-selected' : minder.queryCommandState('bold') == 1}"
+    ng-class="{'active' : minder.queryCommandState('bold') == 1}"
     ng-disabled="minder.queryCommandState('bold') === -1"
     tooltip="{{ 'bold' | lang: 'ui' }}"
-  ></span
+  ><i class="iconfont icon-jiacu"></i></span
   ><span
-    class="s-btn-icon font-italics iconfont icon-xieti"
+    class="s-btn-icon font-italics"
     ng-click="minder.queryCommandState('italic') === -1 || minder.execCommand('italic')"
-    ng-class="{'font-italics-selected' : minder.queryCommandState('italic') == 1}"
+    ng-class="{'active' : minder.queryCommandState('italic') == 1}"
     ng-disabled="minder.queryCommandState('italic') === -1"
     tooltip="{{ 'italic' | lang: 'ui' }}"
   >
+    <i class="iconfont icon-xieti"></i>
   </span>
   <div
     class="font-color-wrap"

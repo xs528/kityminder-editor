@@ -1,9 +1,25 @@
 @primary: #3982FC;
 
 @tool-hover: #f3f3f3;
-@tool-active: #e6e6e6;
+@tool-active: #e8f0fd;
 @tool-selected: @tool-active;
 
 @button-hover: @tool-hover;
 @button-active: @tool-active;
 @button-pressed: @tool-selected;
+
+.ele-state() {
+  border-radius: 2px;
+  &:hover {
+    background-color: @tool-hover;
+  }
+  &:active {
+    background-color: @tool-active;
+  }
+  &.active {
+    background-color: @tool-active;
+    .iconfont {
+      color: @primary;
+    }
+  }
+}

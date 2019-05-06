@@ -18,12 +18,12 @@ angular.module('kityminderEditor')
 				data.isActiveStyleBrush = false
 				$scope.status = statusMap.paste
 				$scope.isDisabledOfStyleBrush = function() {
-					return !(data.isActiveStyleBrush || minder.getSelectedNode())
+					return minder.isReadonly() || !(data.isActiveStyleBrush || minder.getSelectedNode())
 				}
 
 				$scope.handleStyle = function() {
-					if (window.app && !window.utils.isVip()) {
-						window.utils.openVipDialog()
+					if (window.bridge && !window.bridge.isVip()) {
+						window.bridge.openVipDialog()
 						return
 					}
 					if (!data.isActiveStyleBrush) {

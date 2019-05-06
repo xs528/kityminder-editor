@@ -42,13 +42,8 @@
   .layout-btn,
   .style-brush-btn {
     width: 30px;
-    &:hover {
-      background-color: @tool-hover;
-    }
-    &:active,
-    &.active {
-      background-color: @tool-active;
-    }
+    
+    .ele-state;
   }
   .bottom-bar {
     position: absolute;
@@ -66,6 +61,12 @@
 .km-editor {
   overflow: hidden;
   z-index: 2;
+
+  > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .km-editor > .mask {
@@ -160,10 +161,6 @@ div.minder-editor-container {
   width: 2px;
   background-color: rgb(251, 251, 251);
   cursor: ew-resize;
-}
-
-.style-brush-active {
-    cursor: url(//s1.url.cn/tim/docs/static/img/pointer_format-ae0c86c101.png) 0 0,default!important;
 }
 
 // @override bootstrap

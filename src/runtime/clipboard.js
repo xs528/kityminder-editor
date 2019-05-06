@@ -176,8 +176,8 @@ define(function(require, exports, module) {
               var nodes = decode(MimeType.getPureText(textData))
               var _node
               // 普通用户和VIP的节点数限制
-              if (window.app && window.utils.nodeLimiter(window.utils.calcNodeNum(nodes))) {
-                window.app.$root.$emit('node_limit')
+              if (window.bridge && window.bridge.nodeLimiter(window.bridge.calcNodeNum(nodes))) {
+                window.bridge.openNodeLimitMsg()
                 return
               }
               sNodes.forEach(function(node) {

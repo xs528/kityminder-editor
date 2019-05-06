@@ -200,7 +200,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'dist/',
-            src: '**/*',
+            src: ['**/*.js', '**/*.min.css', 'images/*'],
             dest: '../public/static/editor',
           },
         ],

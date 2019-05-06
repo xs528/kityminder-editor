@@ -23,7 +23,7 @@ angular.module('kityminderEditor')
                 });
             },
             uploadFile(file) {
-                return window.utils.uploadFile(file)
+                return window.bridge && window.bridge.uploadFile(file)
             },
             
         }
