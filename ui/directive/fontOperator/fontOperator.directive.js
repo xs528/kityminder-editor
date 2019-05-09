@@ -11,7 +11,7 @@ angular.module('kityminderEditor')
 				var minder = scope.minder;
 				var currentTheme = minder.getThemeItems();
 
-				scope.fontSizeList = [10, 12, 16, 18, 24, 32, 48];
+				scope.fontSizeList = [10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36];
                 scope.fontFamilyList = [{
                     name: '宋体',
                     val: '宋体,SimSun'

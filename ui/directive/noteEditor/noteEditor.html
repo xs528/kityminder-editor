@@ -20,5 +20,8 @@
         <p ng-show="!noteEnabled" class="km-note-tips">
             请选择节点编辑备注
         </p>
+        <div class="km-note-remove" ng-show="noteEnabled && visibleRemoveBtn()">
+            <div class="km-note-remove-btn" ng-click="minder.execCommand('note', null)">移除当前备注</div>
+        </div>
     </div>
 </div>

@@ -66,7 +66,12 @@ angular.module('kityminderEditor')
                 $scope.closeNoteEditor = function() {
                     valueTransfer.noteEditorOpen = false;
 					editor.receiver.selectAll();
-                };
+				};
+				
+				$scope.visibleRemoveBtn = function() {
+					var node = minder.getSelectedNode()
+					return node && node.data.note
+				}
 
 
 
