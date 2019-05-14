@@ -103,6 +103,10 @@
     border-radius: 0;
     box-shadow: 0 0 8px rgba(0, 0, 0, .15);
 
+    .panel-heading {
+        text-align: center;
+        background-color: #fff;
+    }
     &.panel {
         margin: 0;
         padding: 0;
@@ -115,8 +119,7 @@
 
             .close-note-editor {
                 width: 15px;
-                height: 15px;
-                float: right;
+                float: left;
 
                 &:hover {
                     cursor: pointer;
@@ -129,16 +132,6 @@
         }
     }
 
-    .CodeMirror {
-        position: absolute;
-        top: 41px;
-        bottom: 0;
-        height: auto;
-        cursor: text;
-        font-size: 14px;
-        line-height: 1.3em;
-        font-family: consolas;
-    }
 }
 .km-note-tips {
     color: #ccc;

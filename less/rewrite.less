@@ -1,5 +1,30 @@
 // rewrite bootstrap
 .dropdown-menu {
-    border-color: #ddd;
-    border-radius: 0;
+  border-color: #ddd;
+  border-radius: 0;
+}
+
+// rewrite codemirror
+.km-note {
+  .CodeMirror {
+    position: absolute;
+    top: 41px;
+    bottom: 0;
+    height: auto;
+    cursor: text;
+    font-size: 14px;
+    line-height: 1.3em;
+    font-family: consolas;
+  }
+  .CodeMirror-sizer {
+    padding-left: 8px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .CodeMirror-gutters {
+    display: none;
+  }
+  .CodeMirror-linenumber {
+    display: none;
+  }
 }
