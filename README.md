@@ -1,4 +1,4 @@
-KityMinder Editor
+KityMinder Editor 脑图编辑库
 ==========
 
 ## 简介
